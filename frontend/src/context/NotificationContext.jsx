@@ -2,9 +2,9 @@ import React, { createContext, useContext, useState, useEffect, useRef, useCallb
 import api from '../services/api';
 import { toast } from 'react-toastify';
 import { useAuth } from './AuthContext';
-import { io } from 'socket.io-client';
+import { API_URL, BASE_URL } from '../config';
 
-const socket = io('http://localhost:5000');
+const socket = io(BASE_URL);
 const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {

@@ -8,8 +8,9 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
+import { BASE_URL } from '../config';
 
-const socket = io('http://localhost:5000');
+const socket = io(BASE_URL);
 
 const PipelineBoard = () => {
     const [leads, setLeads] = useState([]);

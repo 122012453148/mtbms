@@ -88,7 +88,7 @@ app.use('/api/revenue', revenueRoutes);
 app.use('/api/salary', salaryRoutes);
 
 app.get('/', (req, res) => {
-    res.send('SMTBMS ENTERPRISE API V3.0 ACTIVE');
+    res.send('MTBMS ENTERPRISE API V3.0 ACTIVE');
 });
 
 const PORT = process.env.PORT || 5000;

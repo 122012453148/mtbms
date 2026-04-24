@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Camera, MapPin, UploadCloud, Save, Send, ShieldAlert, BadgeCheck, Sparkles } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://mtbms.onrender.com/api';
 
 const EmployeeAuditPage = () => {
     const [formData, setFormData] = useState({

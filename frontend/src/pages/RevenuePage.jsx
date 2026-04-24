@@ -253,7 +253,7 @@ const RevenuePage = ({ isAdmin = false }) => {
 
     // Socket.io real-time
     useEffect(() => {
-        socketRef.current = io('http://localhost:5000', { transports: ['websocket'] });
+        socketRef.current = io('https://mtbms.onrender.com', { transports: ['websocket'] });
         socketRef.current.on('revenueAdded', () => fetchAll());
         socketRef.current.on('budgetAllocated', () => fetchAll());
         return () => socketRef.current?.disconnect();

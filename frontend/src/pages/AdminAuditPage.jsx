@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import jsPDF from 'jspdf';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://mtbms.onrender.com/api';
 
 const AdminAuditPage = () => {
     const [audits, setAudits] = useState([]);
@@ -46,7 +46,7 @@ const AdminAuditPage = () => {
         if (!path) return '';
         if (path.startsWith('http')) return path;
         const normalized = path.replace(/\\/g, '/');
-        return `http://localhost:5000${normalized.startsWith('/') ? '' : '/'}${normalized}`;
+        return `https://mtbms.onrender.com${normalized.startsWith('/') ? '' : '/'}${normalized}`;
     };
 
     const fetchImageAsBase64 = (url) => {

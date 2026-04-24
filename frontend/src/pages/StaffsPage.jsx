@@ -15,7 +15,7 @@ const StaffMemberImage = ({ src, name, className = "w-full h-full object-cover" 
     const getImageUrl = (imgPath) => {
         if (!imgPath) return null;
         if (imgPath.startsWith('http')) return imgPath;
-        return `http://localhost:5000/${imgPath.replace(/\\/g, '/')}`;
+        return `https://mtbms.onrender.com/${imgPath.replace(/\\/g, '/')}`;
     };
 
     const imageUrl = getImageUrl(src);
