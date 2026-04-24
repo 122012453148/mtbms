@@ -37,11 +37,25 @@ const ERPPage = () => {
     });
     const [poForm, setPoForm] = useState({ 
         vendor: '', 
-        material: 'TATA', 
+        material: '', 
         quantity: 1, 
         rate: 0, 
         deliveryDate: '' 
     });
+
+    const handleVendorChange = (vendorId) => {
+        const selectedVendor = vendors.find(v => v._id === vendorId);
+        if (selectedVendor) {
+            setPoForm({
+                ...poForm,
+                vendor: vendorId,
+                material: selectedVendor.materialType || 'Other',
+                rate: selectedVendor.defaultRate || 0 
+            });
+        } else {
+            setPoForm({ ...poForm, vendor: vendorId });
+        }
+    };
 
     const fetchData = async () => {
         try {
@@ -91,7 +105,7 @@ const ERPPage = () => {
             await api.post('/orders', poForm);
             toast.success('Purchase Directive Issued');
             setShowPOModal(false);
-            setPoForm({ vendor: '', material: 'TATA', quantity: 1, rate: 0, deliveryDate: '' });
+            setPoForm({ vendor: '', material: '', quantity: 1, rate: 0, deliveryDate: '' });
             fetchData();
         } catch (err) { toast.error('PO Authorization failure'); }
     };
@@ -179,11 +193,10 @@ const ERPPage = () => {
                                 <div className="grid grid-cols-2 gap-4">
                                     <input type="text" placeholder="Location" className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase tracking-widest outline-none" value={vendorForm.location} onChange={(e) => setVendorForm({...vendorForm, location: e.target.value})} />
                                     <select className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase tracking-widest outline-none" value={vendorForm.materialType} onChange={(e) => setVendorForm({...vendorForm, materialType: e.target.value})}>
-                                        <option value="TATA">TATA Steel</option>
-                                        <option value="JSW">JSW Steel</option>
-                                        <option value="SAIL">SAIL</option>
-                                        <option value="Vizag Steel">Vizag Steel</option>
-                                        <option value="Other">Other</option>
+                                        <option value="">Select Category</option>
+                                        {['TATA', 'JSW', 'SAIL', 'Vizag Steel', 'Other'].map(m => (
+                                            <option key={m} value={m}>{m} Steel</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
@@ -211,19 +224,23 @@ const ERPPage = () => {
                             <div className="grid grid-cols-2 gap-8">
                                 <div className="space-y-2">
                                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Supplier Entity</label>
-                                    <select className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black uppercase tracking-widest outline-none" value={poForm.vendor} onChange={(e) => setPoForm({...poForm, vendor: e.target.value})} required>
+                                    <select 
+                                        className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black uppercase tracking-widest outline-none" 
+                                        value={poForm.vendor} 
+                                        onChange={(e) => handleVendorChange(e.target.value)} 
+                                        required
+                                    >
                                         <option value="">Select Vendor</option>
-                                        {vendors.map(v => <option key={v._id} value={v._id}>{v.name}</option>)}
+                                        {vendors.map(v => <option key={v._id} value={v._id}>{v.name} ({v.location})</option>)}
                                     </select>
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Material Specification</label>
                                     <select className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black uppercase tracking-widest outline-none" value={poForm.material} onChange={(e) => setPoForm({...poForm, material: e.target.value})} required>
-                                        <option value="TATA">TATA Steel</option>
-                                        <option value="JSW">JSW Steel</option>
-                                        <option value="SAIL">SAIL</option>
-                                        <option value="Vizag Steel">Vizag Steel</option>
-                                        <option value="Other">Other</option>
+                                        <option value="">Select Spec</option>
+                                        {['TATA', 'JSW', 'SAIL', 'Vizag Steel', 'Other'].map(m => (
+                                            <option key={m} value={m}>{m} Steel</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="space-y-2">

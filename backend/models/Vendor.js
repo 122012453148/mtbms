@@ -14,7 +14,8 @@ const vendorSchema = new mongoose.Schema({
     },
     category: { type: String, default: 'Steel Provider' },
     status: { type: String, enum: ['Active', 'Blacklisted'], default: 'Active' },
-    rating: { type: Number, default: 5 }
+    rating: { type: Number, default: 5 },
+    defaultRate: { type: Number, default: 0 }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Vendor', vendorSchema);
