@@ -91,7 +91,11 @@ const EmployeeDashboard = () => {
         return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => { 
+        fetchData(); 
+        const interval = setInterval(fetchData, 5000);
+        return () => clearInterval(interval);
+    }, []);
 
     // Timer effect
     useEffect(() => {

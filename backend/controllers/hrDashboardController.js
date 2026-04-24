@@ -1,28 +1,39 @@
-const Employee = require('../models/Employee');
+const User = require('../models/User');
 const Attendance = require('../models/Attendance');
 const Leave = require('../models/Leave');
 const Payroll = require('../models/Payroll');
+const SalaryBudget = require('../models/SalaryBudget');
 
 exports.getHRDashboardStats = async (req, res) => {
     try {
-        const totalEmployees = await Employee.countDocuments();
+        const totalEmployees = await User.countDocuments({ role: 'Employee' });
+        const totalManagers = await User.countDocuments({ role: 'Manager' });
+        const totalSales = await User.countDocuments({ role: 'Sales' });
         
         const today = new Date();
         today.setHours(0,0,0,0);
         
         const presentToday = await Attendance.countDocuments({ date: { $gte: today }, status: 'Present' });
-        const absentToday = await Attendance.countDocuments({ date: { $gte: today }, status: 'Absent' });
         const pendingLeaves = await Leave.countDocuments({ status: 'Pending' });
         
-        const payroll = await Payroll.find({});
-        const totalPayroll = payroll.reduce((acc, p) => acc + p.totalPaid, 0);
+        // Payroll Aggregation
+        const payrollStats = await Payroll.aggregate([
+            { $group: { _id: null, total: { $sum: '$totalPaid' } } }
+        ]);
+
+        // Budget for the current month
+        const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+        const currentYear = new Date().getFullYear();
+        const budget = await SalaryBudget.findOne({ month: currentMonth, year: currentYear });
 
         res.json({
             totalEmployees,
+            totalManagers,
+            totalSales,
             presentToday,
-            absentToday,
             pendingLeaves,
-            totalPayroll
+            totalPayroll: payrollStats[0]?.total || 0,
+            budget: budget || { totalAmount: 0, remainingAmount: 0 }
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
