@@ -92,7 +92,7 @@ const StaffsPage = () => {
                             placeholder="Search by name..."
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
-                            className="bg-white/5 border border-white/10 text-white rounded-2xl py-4 pl-12 pr-6 text-xs font-black normal-case tracking-widest outline-none focus:ring-4 focus:ring-[#CE2626]/20 transition-all w-full"
+                            className="bg-white/5 border border-white/10 text-white rounded-2xl py-4 pl-12 pr-6 text-xs font-bold normal-case tracking-widest outline-none focus:ring-4 focus:ring-[#CE2626]/20 transition-all w-full"
                         />
                     </div>
                 </div>

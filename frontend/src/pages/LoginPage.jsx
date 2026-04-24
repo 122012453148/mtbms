@@ -63,7 +63,7 @@ const LoginPage = () => {
                                 <input 
                                     type="text" required
                                     value={username} onChange={(e) => setUsername(e.target.value)}
-                                    className="w-full pl-16 pr-8 py-5 bg-slate-50 border-none rounded-2xl text-[11px] md:text-xs font-black normal-case tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                    className="w-full pl-16 pr-8 py-5 bg-slate-50 border-none rounded-2xl text-[11px] md:text-xs font-bold normal-case tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
                                     placeholder="Username / ID"
                                 />
                             </div>
@@ -78,7 +78,7 @@ const LoginPage = () => {
                                 <input 
                                     type="password" required
                                     value={password} onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-16 pr-8 py-5 bg-slate-50 border-none rounded-2xl text-[11px] md:text-xs font-black normal-case tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                    className="w-full pl-16 pr-8 py-5 bg-slate-50 border-none rounded-2xl text-[11px] md:text-xs font-bold normal-case tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
                                     placeholder="••••••••"
                                 />
                             </div>
