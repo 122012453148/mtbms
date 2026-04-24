@@ -32,6 +32,7 @@ const auditRoutes = require('./routes/auditRoutes');
 const userRoutes = require('./routes/userRoutes');
 const revenueRoutes = require('./routes/revenueRoutes');
 const salaryRoutes = require('./routes/salaryRoutes');
+const vendorRoutes = require('./routes/vendorRoutes');
 
 const socketUtils = require('./utils/socket');
 
@@ -86,6 +87,7 @@ app.use('/api/audit', auditRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/revenue', revenueRoutes);
 app.use('/api/salary', salaryRoutes);
+app.use('/api/vendors', vendorRoutes);
 
 app.get('/', (req, res) => {
     res.send('MTBMS ENTERPRISE API V3.0 ACTIVE');
