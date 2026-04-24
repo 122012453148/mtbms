@@ -14,7 +14,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/dashboard' },
         { name: 'Staffs', icon: <Users size={20} />, path: '/staffs' },
         { name: 'Materials', icon: <Package size={20} />, path: '/materials' },
-        { name: 'Customers', icon: <Users size={20} />, path: '/sales-customers' },
+        { name: 'Customers', icon: <Users size={20} />, path: '/admin-customers' },
         { name: 'Acquisition Board', icon: <Briefcase size={20} />, path: '/admin-acquisition' },
         { name: 'ERP', icon: <Briefcase size={20} />, path: '/erp' },
         { name: 'Deal Approvals', icon: <TrendingUp size={20} />, path: '/admin-approvals' },
