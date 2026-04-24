@@ -9,7 +9,7 @@ import {
 import { toast } from 'react-toastify';
 
 // Robust image component with onError fallback
-const StaffMemberImage = ({ src, name, className = "w-full h-full object-cover" }) => {
+const StaffMemberImage = ({ src, name, className = "w-full h-full object-contain" }) => {
     const [error, setError] = useState(false);
 
     const getImageUrl = (imgPath) => {

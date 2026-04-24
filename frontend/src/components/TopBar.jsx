@@ -181,7 +181,7 @@ const TopBar = ({ onToggleSidebar }) => {
                             <img 
                                 src={user?.profileImage || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&background=161E54&color=fff`}
                                 alt="employee"
-                                className="w-9 h-9 md:w-12 md:h-12 rounded-full object-cover border-2 border-slate-200 shadow-sm"
+                                className="w-11 h-11 md:w-16 md:h-16 rounded-full object-contain border-2 border-slate-200 shadow-sm"
                             />
                             <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
                         </div>
