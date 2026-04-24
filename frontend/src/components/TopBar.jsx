@@ -175,21 +175,21 @@ const TopBar = ({ onToggleSidebar }) => {
                 <div className="relative" ref={profileRef}>
                     <button 
                         onClick={() => setShowProfile(v => !v)}
-                        className="flex items-center gap-2 md:flex-col md:justify-center hover:scale-105 transition-all duration-300 p-1 md:p-2"
+                        className="flex flex-col items-center justify-center hover:scale-105 transition-all duration-300 p-1"
                     >
                         <div className="relative">
                             <img 
                                 src={user?.profileImage || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&background=161E54&color=fff`}
-                                alt="employee"
-                                className="w-11 h-11 md:w-16 md:h-16 rounded-full object-contain border-2 border-slate-200 shadow-sm"
+                                alt="profile"
+                                className="w-16 h-16 rounded-full object-contain border-2 border-slate-200 shadow-md"
                             />
-                            <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
+                            <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></div>
                         </div>
-                        <div className="text-left md:text-center hidden sm:block">
-                            <h2 className="text-[10px] md:text-xs font-black text-slate-900 leading-tight uppercase tracking-tighter">
+                        <div className="text-center mt-1">
+                            <h2 className="text-[11px] font-black text-slate-900 leading-tight uppercase tracking-tighter">
                                 {user?.name || user?.username}
                             </h2>
-                            <p className="text-[8px] md:text-[9px] text-slate-400 font-bold uppercase tracking-widest hidden md:block">
+                            <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest leading-none mt-0.5">
                                 {user?.role}
                             </p>
                         </div>
