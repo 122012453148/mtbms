@@ -315,27 +315,27 @@ const AcquisitionBoard = () => {
                             <div className="grid grid-cols-2 gap-8">
                                 <div className="space-y-2">
                                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Customer Identifier</label>
-                                    <input name="customerName" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black uppercase tracking-widest outline-none focus:ring-2 focus:ring-[#CE2626]/10" placeholder="Identity name" />
+                                    <input name="customerName" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black normal-case tracking-widest outline-none focus:ring-2 focus:ring-[#CE2626]/10" placeholder="Identity name" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Entity / Company</label>
-                                    <input name="companyName" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black uppercase tracking-widest outline-none focus:ring-2 focus:ring-[#CE2626]/10" placeholder="Enterprise ID" />
+                                    <input name="companyName" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black normal-case tracking-widest outline-none focus:ring-2 focus:ring-[#CE2626]/10" placeholder="Enterprise ID" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Project Specification</label>
-                                    <input name="projectName" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black uppercase tracking-widest outline-none focus:ring-2 focus:ring-[#CE2626]/10" placeholder="Operation Target" />
+                                    <input name="projectName" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black normal-case tracking-widest outline-none focus:ring-2 focus:ring-[#CE2626]/10" placeholder="Operation Target" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Payload Window (Date)</label>
-                                    <input type="date" name="deliveryDate" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black uppercase tracking-widest outline-none" />
+                                    <input type="date" name="deliveryDate" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black normal-case tracking-widest outline-none" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Operational Load (Tons)</label>
-                                    <input type="number" name="quantity" step="0.01" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black uppercase tracking-widest outline-none" placeholder="0.00" />
+                                    <input type="number" name="quantity" step="0.01" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black normal-case tracking-widest outline-none" placeholder="0.00" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Rate / Ton (₹)</label>
-                                    <input type="number" name="ratePerTon" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black uppercase tracking-widest outline-none" placeholder="Rate in INR" />
+                                    <input type="number" name="ratePerTon" required className="w-full p-4 bg-slate-50 border-none rounded-xl text-xs font-black normal-case tracking-widest outline-none" placeholder="Rate in INR" />
                                 </div>
                             </div>
                             <div className="space-y-2">

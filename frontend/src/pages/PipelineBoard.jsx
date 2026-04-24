@@ -130,7 +130,7 @@ const PipelineBoard = () => {
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
                     <div className="relative flex-1 lg:w-64">
                         <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                        <input className="w-full pl-14 pr-6 py-4 bg-white border border-slate-100 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest focus:ring-4 focus:ring-slate-900/5 outline-none" placeholder="Search pipeline..." />
+                        <input className="w-full pl-14 pr-6 py-4 bg-white border border-slate-100 rounded-2xl text-[10px] md:text-xs font-black normal-case tracking-widest focus:ring-4 focus:ring-slate-900/5 outline-none" placeholder="Search pipeline..." />
                     </div>
                     <button 
                         onClick={() => setShowModal(true)}

@@ -189,9 +189,9 @@ const ERPPage = () => {
                         </div>
                         <form onSubmit={handleAddVendor} className="p-10 space-y-6">
                             <div className="space-y-4">
-                                <input type="text" placeholder="Vendor Entity Name" required className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase tracking-widest outline-none" value={vendorForm.name} onChange={(e) => setVendorForm({...vendorForm, name: e.target.value})} />
+                                <input type="text" placeholder="Vendor Entity Name" required className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black normal-case tracking-widest outline-none" value={vendorForm.name} onChange={(e) => setVendorForm({...vendorForm, name: e.target.value})} />
                                 <div className="grid grid-cols-2 gap-4">
-                                    <input type="text" placeholder="Location" className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase tracking-widest outline-none" value={vendorForm.location} onChange={(e) => setVendorForm({...vendorForm, location: e.target.value})} />
+                                    <input type="text" placeholder="Location" className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black normal-case tracking-widest outline-none" value={vendorForm.location} onChange={(e) => setVendorForm({...vendorForm, location: e.target.value})} />
                                     <select className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase tracking-widest outline-none" value={vendorForm.materialType} onChange={(e) => setVendorForm({...vendorForm, materialType: e.target.value})}>
                                         <option value="">Select Category</option>
                                         {['TATA', 'JSW', 'SAIL', 'Vizag Steel', 'Other'].map(m => (
@@ -200,8 +200,8 @@ const ERPPage = () => {
                                     </select>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <input type="email" placeholder="Email" required className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase tracking-widest outline-none" value={vendorForm.email} onChange={(e) => setVendorForm({...vendorForm, email: e.target.value})} />
-                                    <input type="text" placeholder="Phone" className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase tracking-widest outline-none" value={vendorForm.phone} onChange={(e) => setVendorForm({...vendorForm, phone: e.target.value})} />
+                                    <input type="email" placeholder="Email" required className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black normal-case tracking-widest outline-none" value={vendorForm.email} onChange={(e) => setVendorForm({...vendorForm, email: e.target.value})} />
+                                    <input type="text" placeholder="Phone" className="w-full p-4 bg-slate-50 border-none rounded-2xl text-xs font-black normal-case tracking-widest outline-none" value={vendorForm.phone} onChange={(e) => setVendorForm({...vendorForm, phone: e.target.value})} />
                                 </div>
                             </div>
                             <button className="w-full py-6 bg-[#CE2626] text-white rounded-[2rem] text-[10px] font-black uppercase tracking-[0.3em] shadow-xl shadow-rose-500/20 hover:scale-[1.02] active:scale-95 transition-all mt-4">COMMIT ONBOARDING</button>

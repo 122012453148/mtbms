@@ -199,7 +199,7 @@ const TaskBoard = () => {
                             <div className="space-y-2">
                                 <label className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] pl-2 italic">Objective Designation</label>
                                 <input 
-                                    className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                    className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black normal-case tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
                                     required placeholder="Brief task name"
                                     value={newTask.title} onChange={(e) => setNewTask({...newTask, title: e.target.value})}
                                 />
@@ -207,7 +207,7 @@ const TaskBoard = () => {
                             <div className="space-y-2">
                                 <label className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] pl-2 italic">Mission Parameters</label>
                                 <textarea 
-                                    className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight resize-none h-28 focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                    className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black normal-case tracking-tight resize-none h-28 focus:ring-4 focus:ring-slate-900/5 transition-all"
                                     placeholder="Task details..."
                                     value={newTask.description} onChange={(e) => setNewTask({...newTask, description: e.target.value})}
                                 />
@@ -237,7 +237,7 @@ const TaskBoard = () => {
                                 <div className="space-y-2 md:col-span-2">
                                     <label className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] pl-2 italic">Execution Deadline</label>
                                     <input 
-                                        type="date" className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                        type="date" className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black normal-case focus:ring-4 focus:ring-slate-900/5 transition-all"
                                         required value={newTask.deadline} onChange={(e) => setNewTask({...newTask, deadline: e.target.value})}
                                     />
                                 </div>

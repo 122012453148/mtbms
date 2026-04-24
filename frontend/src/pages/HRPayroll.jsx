@@ -136,7 +136,7 @@ const HRPayroll = () => {
                     <h3 className="text-xs font-black text-slate-900 uppercase tracking-[0.4em] italic leading-none border-l-4 border-[#161E54] pl-6">Operations Disbursal Ledger</h3>
                     <div className="relative">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                        <input type="text" placeholder="Scan Beneficiary Identity..." className="pl-12 pr-6 py-3 bg-slate-50 border-none rounded-xl text-[10px] font-bold uppercase tracking-widest outline-none focus:ring-2 focus:ring-[#161E54]/10 transition-all w-64" />
+                        <input type="text" placeholder="Scan Beneficiary Identity..." className="pl-12 pr-6 py-3 bg-slate-50 border-none rounded-xl text-[10px] font-bold normal-case tracking-widest outline-none focus:ring-2 focus:ring-[#161E54]/10 transition-all w-64" />
                     </div>
                 </div>
                 <div className="overflow-x-auto">
