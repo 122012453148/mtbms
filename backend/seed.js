@@ -12,11 +12,11 @@ const seedUsers = async () => {
         await Leave.deleteMany();
         
         const users = [
-            { username: 'admin', email: 'admin@smtbm.com', password: 'admin123', role: 'Admin', firstLogin: false },
-            { username: 'hr', email: 'hr@smtbm.com', password: 'hr123', role: 'HR', firstLogin: false },
-            { username: 'manager', email: 'mgr@smtbm.com', password: 'manager123', role: 'Manager', firstLogin: false },
-            { username: 'sales', email: 'sls@smtbm.com', password: 'sales123', role: 'Sales', firstLogin: false },
-            { username: 'employee', email: 'emp@smtbm.com', password: 'emp123', role: 'Employee', firstLogin: false },
+            { username: 'admin', email: 'admin@mtbms.com', password: 'admin123', role: 'Admin', firstLogin: false },
+            { username: 'hr', email: 'hr@mtbms.com', password: 'hr123', role: 'HR', firstLogin: false },
+            { username: 'manager', email: 'mgr@mtbms.com', password: 'manager123', role: 'Manager', firstLogin: false },
+            { username: 'sales', email: 'sls@mtbms.com', password: 'sales123', role: 'Sales', firstLogin: false },
+            { username: 'employee', email: 'emp@mtbms.com', password: 'emp123', role: 'Employee', firstLogin: false },
         ];
 
         for (let u of users) {
