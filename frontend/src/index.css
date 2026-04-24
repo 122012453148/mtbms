@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #FFFDEB;
+  --color-brand-primary: #CE2626;
+  --color-brand-dark: #9B1C1C;
+  --font-inter: 'Inter', sans-serif;
+}
+
+:root {
+  font-family: 'Inter', sans-serif;
+  background-color: #FFFDEB;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #0f172a; /* text-slate-900 */
+}
+
+/* Base typography overrides to match user requirements */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600; /* font-semibold */
+  color: #0f172a; /* text-slate-900 */
+}
+
+.heading-xl {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.subtext {
+  font-size: 0.875rem; /* text-sm */
+  color: #64748b; /* text-slate-500 */
+}
+
+.kpi-title {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: #6b7280; /* text-gray-500 */
+}
+
+.kpi-value {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 700; /* font-bold */
+  color: #111827; /* text-gray-900 */
+}
+
+.sidebar-link {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+}
+
+/* Layout Utilities */
+.card {
+  background-color: white;
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* shadow-sm */
+  border: 1px solid #f1f5f9; /* border-slate-100 */
+}
+
+/* Responsive Grid System */
+.responsive-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Mobile-First Spacing & Typography */
+@layer utilities {
+  .mobile-padding {
+    @apply p-4 md:p-8 lg:p-12;
+  }
+  
+  .responsive-text-xl {
+    @apply text-xl md:text-2xl lg:text-3xl;
+  }
+  
+  .full-width-mobile {
+    @apply w-full md:w-auto;
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* Table Responsiveness */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Chart Container */
+.chart-container {
+  position: relative;
+  height: 300px;
+}
+@media (min-width: 768px) {
+  .chart-container {
+    height: 400px;
+  }
+}
