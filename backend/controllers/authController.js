@@ -13,7 +13,11 @@ exports.loginUser = async (req, res) => {
     try {
         // Find user by username or email or name (for backward compatibility)
         const user = await User.findOne({ 
-            $or: [{ username: username }, { email: username }, { name: username }] 
+            $or: [
+                { username: { $regex: new RegExp(`^${username}$`, 'i') } }, 
+                { email: { $regex: new RegExp(`^${username}$`, 'i') } }, 
+                { name: { $regex: new RegExp(`^${username}$`, 'i') } }
+            ] 
         });
         
         if (user && (await user.matchPassword(password))) {
