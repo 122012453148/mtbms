@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useRef, useCallb
 import api from '../services/api';
 import { toast } from 'react-toastify';
 import { useAuth } from './AuthContext';
+import { io } from 'socket.io-client';
 import { API_URL, BASE_URL } from '../config';
 
 const socket = io(BASE_URL);
