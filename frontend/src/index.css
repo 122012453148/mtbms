@@ -13,7 +13,9 @@
   background-color: #FFFDEB;
 }
 
-body {
+html, body {
+  overflow-x: hidden;
+  width: 100%;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
@@ -124,4 +126,11 @@ h1, h2, h3, h4, h5, h6 {
   .chart-container {
     height: 400px;
   }
+}
+/* Debug overflow */
+/* * { outline: 1px solid red; } */
+
+img {
+  max-width: 100%;
+  height: auto;
 }

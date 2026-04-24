@@ -12,7 +12,7 @@ const HRLayout = () => {
             <div className="flex-1 lg:ml-72 flex flex-col min-h-screen">
                 <TopBar onToggleSidebar={() => setIsSidebarOpen(true)} />
                 <main className="flex-1 p-4 md:p-8 lg:p-12">
-                    <div className="max-w-[1600px] mx-auto">
+                    <div className="w-full max-w-full mx-auto">
                         <Outlet />
                     </div>
                 </main>
