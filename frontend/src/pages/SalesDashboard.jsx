@@ -5,8 +5,12 @@ import {
     TrendingUp, ArrowUpRight, DollarSign,
     Calendar, CheckCircle2, MessageSquare,
     Loader2, Search, Bell, Filter, ChevronDown,
-    ArrowUp, ArrowDown
+    ArrowUp, ArrowDown, Clock
 } from 'lucide-react';
+import {
+    ResponsiveContainer, AreaChart, Area,
+    CartesianGrid, XAxis, YAxis, Tooltip
+} from 'recharts';
 
 const SalesStat = ({ title, value, icon, trend, color, trendUp = true }) => (
     <div className="bg-white p-6 rounded-[20px] border border-[#E2E8F0] shadow-[0_8px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 group">
@@ -145,6 +149,7 @@ const SalesDashboard = () => {
                     </div>
                 </div>
             </div>
+        </div>
     );
 };
 
