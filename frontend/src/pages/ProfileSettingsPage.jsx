@@ -116,18 +116,18 @@ const ProfileSettingsPage = () => {
                             <div className="absolute top-0 left-0 w-full h-32 bg-[#CE2626] opacity-10 blur-3xl -mt-16"></div>
                             
                             {/* Profile Image with Camera Trigger */}
-                            <div className="relative z-10 mb-6 group cursor-pointer mx-auto" onClick={() => fileInputRef.current.click()}>
-                                <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white flex items-center justify-center relative">
-                                    <img 
-                                        src={preview || user?.profileImage || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&size=256&background=161E54&color=fff`} 
-                                        alt="profile" 
-                                        className="w-full h-full object-cover rounded-full transition-transform group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Camera className="text-white" size={24} />
-                                    </div>
+                            <div className="relative z-10 mb-8 group cursor-pointer mx-auto w-32 h-32" onClick={() => fileInputRef.current.click()}>
+                                <img 
+                                    src={preview || user?.profileImage || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&size=256&background=161E54&color=fff`} 
+                                    alt="profile" 
+                                    className="w-full h-full object-cover rounded-full border-4 border-white shadow-2xl relative z-0"
+                                />
+                                {/* Camera Overlay - positioned absolutely over the image */}
+                                <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
+                                    <Camera className="text-white" size={28} />
                                 </div>
-                                <div className="absolute bottom-1 right-1 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full z-20"></div>
+                                {/* Online Status Indicator */}
+                                <div className="absolute bottom-1 right-1 w-7 h-7 bg-emerald-500 border-4 border-white rounded-full z-20 shadow-lg"></div>
                                 <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
                             </div>
 
