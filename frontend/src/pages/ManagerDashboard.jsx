@@ -8,6 +8,26 @@ import {
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+const MgrStat = ({ title, value, sub, icon, trend }) => (
+    <div className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+        <div className="flex items-center justify-between mb-4">
+            <div className="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-600 group-hover:bg-[#CE2626] group-hover:text-white transition-colors">
+                {icon}
+            </div>
+            {trend && (
+                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
+                    {trend}%
+                </span>
+            )}
+        </div>
+        <div>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{title}</p>
+            <h3 className="text-xl font-bold text-slate-900">{value}</h3>
+            <p className="text-[10px] text-slate-500 mt-1 font-medium italic opacity-70">{sub}</p>
+        </div>
+    </div>
+);
+
 const ManagerDashboard = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);

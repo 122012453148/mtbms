@@ -7,6 +7,18 @@ import {
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+const HRStatCard = ({ title, value, icon, color }) => (
+    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between hover:scale-[1.02] transition-all">
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color} mb-4`}>
+            {icon}
+        </div>
+        <div>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">{title}</p>
+            <h3 className="text-xl font-bold text-slate-900">{value}</h3>
+        </div>
+    </div>
+);
+
 const HRDashboard = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
