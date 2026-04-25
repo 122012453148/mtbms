@@ -137,7 +137,7 @@ const StaffsPage = () => {
                             <div className="bg-slate-950 h-full w-full rounded-[2.3rem] relative flex flex-col">
 
                                 {/* Card Header – red gradient zone */}
-                                <div className="h-2/5 bg-gradient-to-b from-[#CE2626] via-[#CE2626]/70 to-transparent relative p-6 flex justify-between items-start">
+                                <div className="min-h-[180px] bg-gradient-to-b from-[#CE2626] via-[#CE2626]/70 to-transparent relative p-6 flex justify-between items-start overflow-visible">
                                     {/* Logo badge */}
                                     <div>
                                         <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center font-black text-white text-sm italic border border-white/10">S</div>
@@ -145,11 +145,11 @@ const StaffsPage = () => {
 
                                     {/* Profile Photo */}
                                     <div className="relative">
-                                        <div className="w-[90px] h-[90px] rounded-full overflow-hidden border-2 border-white/30 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2 flex-shrink-0 bg-white">
+                                        <div className="w-[100px] h-[100px] rounded-full overflow-hidden border-4 border-white/30 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2 flex-shrink-0 bg-white">
                                             <StaffMemberImage src={u.profileImage} name={u.name} />
                                         </div>
                                         {/* Online indicator */}
-                                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-slate-950 animate-pulse" />
+                                        <div className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-400 rounded-full border-2 border-slate-950 animate-pulse z-10" />
                                     </div>
                                 </div>
 
