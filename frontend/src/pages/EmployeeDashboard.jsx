@@ -183,7 +183,7 @@ const EmployeeDashboard = () => {
                 <div className="md:col-span-1"><StatCard title="Shift Days" value={stats?.presentDays || 0} icon={<UserCheck size={20} />} color="bg-indigo-50 text-indigo-600" /></div>
                 <div className="md:col-span-1"><StatCard title="Missing" value={stats?.absentDays || 0} icon={<AlertCircle size={20} />} color="bg-rose-50 text-rose-600" /></div>
                 <div className="md:col-span-1"><StatCard title="Leaves" value={stats?.leavesTaken || 0} icon={<CalendarCheck size={20} />} color="bg-blue-50 text-blue-600" /></div>
-                <div className="md:col-span-1 lg:col-span-1"><StatCard title="Task Queue" value={stats?.tasksAssigned || 0} icon={<ClipboardList size={20} />} color="bg-slate-900 text-white" /></div>
+                <div className="md:col-span-1 lg:col-span-1"><StatCard title="Task Queue" value={stats?.tasksAssigned || 0} icon={<ClipboardList size={20} />} color="bg-[#9B8EC7] text-white" /></div>
                 <div className="col-span-2 md:col-span-1"><StatCard title="Milestones" value={stats?.tasksCompleted || 0} icon={<CheckCircle2 size={20} />} color="bg-emerald-50 text-emerald-600" /></div>
             </div>
 
@@ -197,7 +197,7 @@ const EmployeeDashboard = () => {
                         <div className="space-y-10 relative z-10">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-5">
-                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${punchState.checkInRaw ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-50 text-slate-300'}`}>IN</div>
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${punchState.checkInRaw ? 'bg-[#D1FAE5] text-[#065F46]' : 'bg-slate-50 text-slate-300'}`}>IN</div>
                                     <div>
                                         <p className="text-xs font-black text-slate-800 uppercase tracking-tight italic">Check-in Registered</p>
                                         <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{checkInTimeFormatted || 'Pending Entry'}</p>
@@ -208,7 +208,7 @@ const EmployeeDashboard = () => {
 
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-5">
-                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${punchState.checkOutRaw ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-50 text-slate-300'}`}>OUT</div>
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${punchState.checkOutRaw ? 'bg-[#FEE2E2] text-[#991B1B]' : 'bg-slate-50 text-slate-300'}`}>OUT</div>
                                     <div>
                                         <p className="text-xs font-black text-slate-800 uppercase tracking-tight italic">Check-out Logged</p>
                                         <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{checkOutTimeFormatted || 'Shift active'}</p>
@@ -243,7 +243,7 @@ const EmployeeDashboard = () => {
                     </div>
                 </div>
 
-                <div className="lg:col-span-2 bg-[#2D2654] rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden group">
+                <div className="lg:col-span-2 bg-[#9B8EC7] rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 text-white shadow-[0_20px_50px_rgba(155,142,199,0.3)] relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-1000 group-hover:scale-150"></div>
                     <div className="flex items-center justify-between mb-10 relative z-10">
                         <h3 className="text-[10px] md:text-[11px] font-black text-slate-300 uppercase tracking-[0.4em] italic">Mission Objectives</h3>
@@ -254,20 +254,22 @@ const EmployeeDashboard = () => {
                             <div 
                                 key={i} 
                                 onClick={() => window.location.href='/employee-tasks'}
-                                className="group bg-white/5 hover:bg-white/10 p-6 rounded-[1.5rem] md:rounded-[2rem] transition-all cursor-pointer flex items-center justify-between border border-white/5 hover:border-white/20 hover:translate-x-2"
+                                className="group bg-white/10 hover:bg-white/20 p-6 rounded-[1.5rem] md:rounded-[2rem] transition-all cursor-pointer flex items-center justify-between border border-white/10 hover:border-white/30 hover:translate-x-2"
                             >
                                 <div className="flex items-center gap-5">
                                     <div className={`w-3 h-3 rounded-full ${t.priority === 'High' ? 'bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.8)]' : t.priority === 'Medium' ? 'bg-amber-400' : 'bg-emerald-400'}`}></div>
                                     <div>
                                         <p className="text-sm md:text-base font-black tracking-tight text-white mb-2 group-hover:text-amber-200 transition-colors uppercase italic">{t.title}</p>
-                                        <div className="flex flex-wrap items-center gap-4 text-[9px] text-slate-400 font-black uppercase tracking-widest">
-                                            <span className="flex items-center gap-1.5">PRIORITY: <span className={t.priority === 'High' ? 'text-rose-400' : 'text-slate-200'}>{t.priority || 'NORMAL'}</span></span>
+                                        <div className="flex flex-wrap items-center gap-4 text-[9px] text-white/60 font-black uppercase tracking-widest">
+                                            <span className="flex items-center gap-1.5">PRIORITY: <span className={t.priority === 'High' ? 'text-rose-400' : 'text-white'}>{t.priority || 'NORMAL'}</span></span>
                                             <span className="opacity-30">|</span>
-                                            <span className="flex items-center gap-1.5">PROTOCOL: <span className={t.status === 'Completed' ? 'text-emerald-400' : 'text-slate-200'}>{t.status}</span></span>
+                                            <span className="flex items-center gap-1.5">PROTOCOL: <span className={t.status === 'Completed' ? 'text-emerald-300' : 'text-white'}>{t.status}</span></span>
                                         </div>
                                     </div>
                                 </div>
-                                <ArrowRight size={20} className="text-slate-500 group-hover:text-white transition-all" />
+                                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-[#9B8EC7] transition-all shadow-lg border border-white/10">
+                                    <ArrowRight size={20} className="text-white" />
+                                </div>
                             </div>
                         ))}
                         {tasks.length === 0 && (
