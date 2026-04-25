@@ -50,7 +50,7 @@ const AttendanceHistory = () => {
         new Date(item.date).toLocaleDateString().includes(filterDate)
     );
 
-    if (loading) return <div className="h-screen flex items-center justify-center"><Loader2 className="animate-spin text-[#161E54]" size={40} /></div>;
+    if (loading) return <div className="h-screen flex items-center justify-center"><Loader2 className="animate-spin text-[#9B8EC7]" size={40} /></div>;
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500 font-inter">
@@ -63,7 +63,7 @@ const AttendanceHistory = () => {
                     {!todayRecord ? (
                         <button 
                             onClick={handleCheckIn}
-                            className="px-8 py-3 bg-[#161E54] text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-[#2A3470] transition-all shadow-xl shadow-indigo-500/10"
+                            className="px-8 py-3 bg-[#9B8EC7] text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-[#7E74C9] transition-all shadow-xl shadow-indigo-500/10"
                         >
                             Execute Check-In
                         </button>
@@ -86,7 +86,7 @@ const AttendanceHistory = () => {
                             placeholder="Filter by date..."
                             value={filterDate}
                             onChange={(e) => setFilterDate(e.target.value)}
-                            className="bg-white pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-[#161E54]/10 transition-all outline-none"
+                            className="bg-white pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-[#9B8EC7]/10 transition-all outline-none"
                         />
                     </div>
                 </div>

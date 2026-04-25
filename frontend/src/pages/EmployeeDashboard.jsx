@@ -4,11 +4,11 @@ import {
     CalendarCheck, UserCheck, Timer, 
     CheckCircle2, ClipboardList, LogIn, 
     LogOut as LogOutIcon, ArrowRight,
-    Loader2, AlertCircle, Calendar
+    Loader2, AlertCircle, Calendar, Bell
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
-const THEME_COLOR = '#9B8EC7';
+const THEME_PRIMARY = '#9B8EC7';
 
 const StatCard = ({ title, value, icon, color }) => (
     <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
@@ -30,11 +30,14 @@ const EmployeeDashboard = () => {
     const [timer, setTimer] = useState(0);
     const [duration, setDuration] = useState(null);
     const [tasks, setTasks] = useState([]);
+    const [profile, setProfile] = useState(null);
 
     const fetchData = async () => {
         try {
             const { data: statsData } = await api.get('/employee-dashboard/stats');
             setStats(statsData);
+            const { data: profileData } = await api.get('/auth/me');
+            setProfile(profileData);
             
             const { data: history } = await api.get('/attendance/my');
             
@@ -97,7 +100,6 @@ const EmployeeDashboard = () => {
         return () => clearInterval(interval);
     }, []);
 
-    // Timer effect
     useEffect(() => {
         let interval;
         if (isCheckedIn) {
@@ -130,17 +132,12 @@ const EmployeeDashboard = () => {
         }
     };
 
-    if (loading) return <div className="h-screen flex items-center justify-center"><Loader2 className="animate-spin text-[#161E54]" size={40} /></div>;
+    if (loading) return <div className="h-screen flex items-center justify-center"><Loader2 className="animate-spin text-[#9B8EC7]" size={40} /></div>;
 
     const isFullyDone = punchState.checkInRaw && punchState.checkOutRaw;
     const checkInTimeFormatted = punchState.checkInRaw ? new Date(punchState.checkInRaw).toLocaleTimeString() : null;
     const checkOutTimeFormatted = punchState.checkOutRaw ? new Date(punchState.checkOutRaw).toLocaleTimeString() : null;
     const todayDateFormatted = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
-    const displayTasks = tasks.slice(0, 5).length > 0 ? tasks.slice(0, 5) : [
-        { title: 'Inventory Audit - Zone B', priority: 'High', status: 'Pending' },
-        { title: 'Shift Handover Protocol', priority: 'Medium', status: 'In Progress' }
-    ];
 
     return (
         <div className="space-y-8 md:space-y-10 animate-in fade-in duration-500 font-inter pb-20">
@@ -156,8 +153,7 @@ const EmployeeDashboard = () => {
                     {!punchState.checkInRaw && !isCheckedIn && (
                         <button 
                             onClick={handleCheckIn}
-                            className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-8 py-4 rounded-xl md:rounded-2xl text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] italic transition-all shadow-xl hover:scale-105 active:scale-95"
-                            style={{ backgroundColor: THEME_COLOR }}
+                            className="w-full flex items-center justify-center gap-3 py-4 bg-[#9B8EC7] text-white rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] italic hover:bg-[#7E74C9] transition-all shadow-xl hover:scale-105 active:scale-95"
                         >
                             <LogIn size={18} /> CHECK IN
                         </button>
@@ -165,8 +161,7 @@ const EmployeeDashboard = () => {
                     {isCheckedIn && (
                         <button 
                             onClick={handleCheckOut}
-                            className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-8 py-4 rounded-xl md:rounded-2xl text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] italic transition-all shadow-xl hover:scale-105 active:scale-95 animate-pulse"
-                            style={{ backgroundColor: THEME_COLOR }}
+                            className="w-full flex items-center justify-center gap-3 py-4 bg-[#9B8EC7] text-white rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] italic hover:bg-[#7E74C9] transition-all shadow-xl hover:scale-105 active:scale-95"
                         >
                             <LogOutIcon size={18} /> CHECK OUT
                         </button>
@@ -192,7 +187,7 @@ const EmployeeDashboard = () => {
                     <div>
                         <div className="flex items-center justify-between mb-10">
                             <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] italic">Shift Status</h3>
-                            <Timer size={20} className="text-[#9B8EC7]" />
+                            <Bell size={16} className="text-[#9B8EC7]" />
                         </div>
                         <div className="space-y-10 relative z-10">
                             <div className="flex items-center justify-between">
@@ -214,7 +209,7 @@ const EmployeeDashboard = () => {
                                         <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{checkOutTimeFormatted || 'Shift active'}</p>
                                     </div>
                                 </div>
-                                {punchState.checkOutRaw && <CheckCircle2 size={18} className="text-indigo-500" />}
+                                {punchState.checkOutRaw && <CheckCircle2 size={18} className="text-[#9B8EC7]" />}
                             </div>
                         </div>
                     </div>
@@ -244,7 +239,7 @@ const EmployeeDashboard = () => {
                 </div>
 
                 <div className="lg:col-span-2 bg-[#9B8EC7] rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 text-white shadow-[0_20px_50px_rgba(155,142,199,0.3)] relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-1000 group-hover:scale-150"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#9B8EC7] to-[#7E74C9] rounded-3xl transform rotate-3 scale-[1.02] opacity-20 transition-transform group-hover:rotate-6"></div>
                     <div className="flex items-center justify-between mb-10 relative z-10">
                         <h3 className="text-[10px] md:text-[11px] font-black text-slate-300 uppercase tracking-[0.4em] italic">Mission Objectives</h3>
                         <div className="bg-white/10 p-3 rounded-2xl text-white shadow-xl"><ClipboardList size={20} /></div>

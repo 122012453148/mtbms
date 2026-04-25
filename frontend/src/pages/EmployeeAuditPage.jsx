@@ -22,7 +22,7 @@ const EmployeeAuditPage = () => {
 
     const THEME_ACCENT = '#CE2626';
     const THEME_BG = '#FFFDEB';
-    const THEME_TEXT = '#161E54';
+    const THEME_TEXT = '#9B8EC7';
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -168,7 +168,7 @@ const EmployeeAuditPage = () => {
                                         className={`w-full flex items-center justify-center gap-2 p-3.5 rounded-xl border transition-all ${
                                             locationCaptured 
                                             ? 'bg-emerald-50 border-emerald-200 text-emerald-700' 
-                                            : 'bg-indigo-50 border-indigo-100 text-indigo-600 hover:bg-indigo-100'
+                                            : 'bg-[#E5DEFF] border-[#9B8EC7]/20 text-[#9B8EC7] hover:bg-[#D1C4E9]'
                                         }`}
                                     >
                                         <MapPin size={18} />
@@ -217,7 +217,7 @@ const EmployeeAuditPage = () => {
                                                 onClick={() => setFormData(prev => ({ ...prev, cleanliness: option }))}
                                                 className={`flex-1 py-3 rounded-xl font-medium border-2 transition-all ${
                                                     formData.cleanliness === option
-                                                    ? 'border-[#161E54] bg-[#161E54] text-white shadow-md'
+                                                    ? 'border-[#9B8EC7] bg-[#9B8EC7] text-white shadow-md'
                                                     : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                                                 }`}
                                             >
@@ -238,7 +238,7 @@ const EmployeeAuditPage = () => {
                                                 onClick={() => setFormData(prev => ({ ...prev, competitor: option }))}
                                                 className={`flex-1 py-3 rounded-xl font-medium border-2 transition-all ${
                                                     formData.competitor === option
-                                                    ? 'border-indigo-600 bg-indigo-600 text-white shadow-md'
+                                                    ? 'border-[#9B8EC7] bg-[#9B8EC7] text-white shadow-md'
                                                     : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                                                 }`}
                                             >
@@ -309,7 +309,7 @@ const EmployeeAuditPage = () => {
                                 rows="4"
                                 value={formData.remarks}
                                 onChange={handleInputChange}
-                                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl focus:ring-2 focus:ring-[#161E54] focus:border-transparent block p-4 transition-all resize-none"
+                                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl focus:ring-2 focus:ring-[#9B8EC7] focus:border-transparent block p-4 transition-all resize-none"
                                 placeholder="Describe any specific observations..."
                             ></textarea>
                         </div>
@@ -328,8 +328,7 @@ const EmployeeAuditPage = () => {
                                 type="button"
                                 onClick={(e) => handleSubmit(e, 'submitted')}
                                 disabled={loading}
-                                className="flex-1 text-white font-bold py-4 px-6 rounded-xl flex justify-center items-center gap-2 transition-all shadow-lg hover:shadow-xl disabled:opacity-50"
-                                style={{ backgroundColor: THEME_ACCENT }}
+                                className="flex-1 bg-[#9B8EC7] text-white font-bold py-4 px-6 rounded-xl flex justify-center items-center gap-2 transition-all shadow-lg hover:bg-[#7E74C9] disabled:opacity-50"
                              >
                                  <Send size={20} /> Submit Final
                              </button>

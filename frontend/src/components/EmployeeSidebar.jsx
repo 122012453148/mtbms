@@ -12,6 +12,7 @@ const EmployeeSidebar = ({ isOpen, onClose }) => {
     const { logout } = useAuth();
     const { unreadCount } = useNotifications();
     const THEME_COLOR = '#9B8EC7';
+    const HOVER_COLOR = '#E5DEFF';
 
     const menuItems = [
         { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/employee-dashboard' },
@@ -55,13 +56,13 @@ const EmployeeSidebar = ({ isOpen, onClose }) => {
                                 `flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-300 group ${
                                     isActive 
                                     ? 'text-white shadow-[0_10px_20px_rgba(155,142,199,0.3)] scale-[1.02] font-black' 
-                                    : 'text-gray-600 hover:bg-[#E5DEFF] hover:text-[#9B8EC7]'
+                                    : 'text-gray-700 hover:bg-[#E5DEFF] hover:text-[#9B8EC7]'
                                 }`
                             }
                             style={({ isActive }) => isActive ? { backgroundColor: THEME_COLOR } : {}}
                         >
                             <div className="flex items-center gap-4">
-                                <span className={`relative transition-colors ${item.path === window.location.pathname ? 'text-white' : 'text-gray-400 group-hover:text-[#9B8EC7]'}`}>
+                                <span className={`relative transition-colors ${item.path === window.location.pathname ? 'text-white' : 'text-gray-500 group-hover:text-[#9B8EC7]'}`}>
                                     {item.icon}
                                     {item.badge > 0 && (
                                         <span className="absolute -top-1.5 -right-1.5 min-w-[16px] h-4 bg-[#CE2626] text-white text-[8px] font-black flex items-center justify-center rounded-full px-0.5 border border-[#FFF6F6]">
@@ -79,7 +80,7 @@ const EmployeeSidebar = ({ isOpen, onClose }) => {
                 <div className="p-4 border-t border-rose-100/50">
                     <button 
                         onClick={logout}
-                        className="w-full flex items-center gap-4 px-4 py-4 rounded-xl text-gray-500 hover:bg-rose-500/10 hover:text-rose-600 transition-all text-sm font-bold"
+                        className="w-full flex items-center gap-4 px-4 py-4 rounded-xl text-gray-700 hover:bg-[#E5DEFF] hover:text-[#9B8EC7] transition-all text-sm font-bold"
                     >
                         <LogOut size={20} />
                         <span>SECURE LOGOUT</span>

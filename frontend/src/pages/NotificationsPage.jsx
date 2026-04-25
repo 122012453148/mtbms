@@ -6,8 +6,8 @@ import {
 } from 'lucide-react';
 
 const TYPE_CONFIG = {
-    all:      { label: 'All',      color: 'bg-slate-900',   icon: Bell },
-    unread:   { label: 'Unread',   color: 'bg-[#CE2626]',   icon: Bell },
+    all:      { label: 'All',      color: 'bg-[#9B8EC7]',   icon: Bell },
+    unread:   { label: 'Unread',   color: 'bg-[#9B8EC7]',   icon: Bell },
     task:     { label: 'Tasks',    color: 'bg-indigo-500',  icon: ClipboardCheck },
     leave:    { label: 'Leave',    color: 'bg-teal-500',    icon: Calendar },
     salary:   { label: 'Salary',   color: 'bg-emerald-500', icon: CreditCard },
@@ -38,7 +38,7 @@ const NotificationsPage = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
                     <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[#CE2626] rounded-xl flex items-center justify-center">
+                        <div className="w-10 h-10 bg-[#9B8EC7] rounded-xl flex items-center justify-center">
                             <Bell size={20} className="text-white" />
                         </div>
                         Broadcast Center
@@ -52,7 +52,7 @@ const NotificationsPage = () => {
                 {unreadCount > 0 && (
                     <button
                         onClick={markAllRead}
-                        className="flex items-center gap-2 px-5 py-3 bg-slate-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-700 transition-all shadow-lg"
+                        className="flex items-center gap-2 px-5 py-3 bg-[#9B8EC7] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#7E74C9] transition-all shadow-lg"
                     >
                         <CheckCheck size={16} /> Mark All as Read
                     </button>
@@ -123,7 +123,7 @@ const NotificationsPage = () => {
                                                     {notif.title}
                                                 </h4>
                                                 {!notif.isRead && (
-                                                    <span className="flex-shrink-0 w-2 h-2 bg-[#CE2626] rounded-full shadow-[0_0_8px_rgba(206,38,38,0.5)]" />
+                                                    <span className="flex-shrink-0 w-2 h-2 bg-[#9B8EC7] rounded-full shadow-[0_0_8px_rgba(155,142,199,0.5)]" />
                                                 )}
                                             </div>
                                             <div className="flex items-center gap-2 flex-shrink-0">

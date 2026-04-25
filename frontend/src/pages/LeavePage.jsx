@@ -83,7 +83,7 @@ const LeavePage = () => {
                 </div>
                 <button 
                     onClick={() => setShowApplyModal(true)}
-                    className="w-full lg:w-auto px-10 py-4 bg-[#CE2626] text-white rounded-2xl text-[10px] md:text-xs font-black shadow-xl shadow-rose-500/20 hover:scale-105 active:scale-95 transition-all uppercase tracking-[0.2em] italic flex items-center justify-center gap-3"
+                    className="w-full lg:w-auto px-10 py-4 bg-[#9B8EC7] text-white rounded-2xl text-[10px] md:text-xs font-black shadow-xl shadow-rose-500/20 hover:scale-105 active:scale-95 transition-all uppercase tracking-[0.2em] italic flex items-center justify-center gap-3 hover:bg-[#7E74C9]"
                 >
                     <Plus size={18} /> Apply Leave
                 </button>
@@ -121,7 +121,7 @@ const LeavePage = () => {
                                 <tr key={leave._id} className="hover:bg-slate-50/50 transition-colors group">
                                     <td className="px-8 md:px-10 py-6 md:py-8">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 bg-slate-900 text-white rounded-[1rem] flex items-center justify-center font-black text-xs uppercase shadow-lg shadow-slate-900/10">
+                                            <div className="w-12 h-12 bg-[#9B8EC7] text-white rounded-[1rem] flex items-center justify-center font-black text-xs uppercase shadow-lg">
                                                 {leave.type[0]}
                                             </div>
                                             <div>
@@ -170,7 +170,7 @@ const LeavePage = () => {
             {showApplyModal && (
                 <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-md z-[100] flex items-center justify-center p-4 overflow-y-auto">
                     <div className="bg-white rounded-[2rem] md:rounded-[3.5rem] w-full max-w-lg shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 my-auto">
-                        <div className="bg-slate-900 p-8 md:p-10 flex justify-between items-center text-white">
+                        <div className="bg-[#9B8EC7] p-8 md:p-10 flex justify-between items-center text-white">
                             <div>
                                 <h2 className="font-black uppercase tracking-[0.2em] text-xs md:text-sm italic">Request Absence</h2>
                                 <p className="text-[8px] md:text-[9px] text-slate-500 font-black uppercase tracking-widest mt-1">HR Compliance Protocol Active</p>
@@ -213,7 +213,7 @@ const LeavePage = () => {
                                     placeholder="State your reasons for absence..."
                                 />
                             </div>
-                            <button className="w-full py-5 md:py-6 bg-[#CE2626] text-white rounded-[2rem] text-[10px] md:text-[11px] font-black uppercase tracking-[0.5em] italic shadow-2xl shadow-rose-500/30 hover:scale-[1.02] active:scale-95 transition-all mt-4">
+                            <button className="w-full py-5 md:py-6 bg-[#9B8EC7] text-white rounded-[2rem] text-[10px] md:text-[11px] font-black uppercase tracking-[0.5em] italic shadow-2xl hover:scale-[1.02] active:scale-95 transition-all mt-4 hover:bg-[#7E74C9]">
                                 TRANSMIT REQUEST
                             </button>
                         </form>

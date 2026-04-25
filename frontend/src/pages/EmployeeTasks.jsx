@@ -59,7 +59,7 @@ const EmployeeTasks = () => {
         }
     };
 
-    if (loading) return <div className="h-screen flex items-center justify-center"><Loader2 className="animate-spin text-[#161E54]" size={40} /></div>;
+    if (loading) return <div className="h-screen flex items-center justify-center"><Loader2 className="animate-spin text-[#9B8EC7]" size={40} /></div>;
 
     const categories = ['Pending', 'In Progress', 'Completed'];
 
@@ -75,7 +75,7 @@ const EmployeeTasks = () => {
                     <div key={cat} className="flex flex-col bg-slate-50/50 rounded-[2.5rem] md:rounded-[3rem] border border-slate-50 p-5 md:p-8 min-w-[300px] md:min-w-[350px] lg:flex-1">
                         <div className="flex items-center justify-between px-3 mb-8">
                             <h3 className="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] italic">{cat}</h3>
-                            <span className="bg-slate-900 text-white text-[9px] font-black px-3 py-1 rounded-xl shadow-lg">
+                            <span className="bg-[#9B8EC7] text-white text-[9px] font-black px-3 py-1 rounded-xl shadow-lg">
                                 {tasks.filter(t => t.status === cat).length}
                             </span>
                         </div>
@@ -110,7 +110,7 @@ const EmployeeTasks = () => {
                                         {cat === 'Pending' && (
                                             <button 
                                                 onClick={() => updateStatus(task._id, 'In Progress')}
-                                                className="w-full flex items-center justify-center gap-3 py-4 bg-slate-900 text-white rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] italic hover:bg-[#CE2626] transition-all shadow-xl hover:scale-105 active:scale-95"
+                                                className="w-full flex items-center justify-center gap-3 py-4 bg-[#9B8EC7] text-white rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] italic hover:bg-[#7E74C9] transition-all shadow-xl hover:scale-105 active:scale-95"
                                             >
                                                 <PlayCircle size={16} /> INITIALIZE
                                             </button>

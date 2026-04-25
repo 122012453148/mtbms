@@ -7,7 +7,7 @@ import { Camera, Edit2, Check, X, Shield, Briefcase, Mail, Phone, Calendar, MapP
 import { useParams } from 'react-router-dom';
 
 const THEME_BG = '#FFFDEB';
-const THEME_PRIMARY = '#161E54';
+const THEME_PRIMARY = '#9B8EC7';
 const THEME_ACCENT = '#CE2626';
 
 const EmployeeProfilePage = () => {
@@ -94,7 +94,7 @@ const EmployeeProfilePage = () => {
         }
     };
 
-    if (loading) return <div className="h-screen flex items-center justify-center text-[#161E54] font-bold">Initializing ID Protocols...</div>;
+    if (loading) return <div className="h-screen flex items-center justify-center text-[#9B8EC7] font-black italic uppercase tracking-widest animate-pulse">Initializing ID Protocols...</div>;
 
     // Derived stats (Mocked for now since not present in basic user schema, real app would fetch from tasks/attendance)
     const stats = {
@@ -114,7 +114,7 @@ const EmployeeProfilePage = () => {
                 {!editing ? (
                     <button 
                         onClick={() => setEditing(true)}
-                        className="px-6 py-3 rounded-full text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2 transition-all shadow-xl hover:scale-105 active:scale-95"
+                        className="px-6 py-3 rounded-full text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2 transition-all shadow-xl hover:bg-[#7E74C9] hover:scale-105 active:scale-95"
                         style={{ backgroundColor: THEME_PRIMARY }}
                     >
                         <Edit2 size={16} /> Edit Profile
@@ -142,11 +142,11 @@ const EmployeeProfilePage = () => {
                 
                 {/* ID Card Display (Left side, takes 4 columns) */}
                 <div className="lg:col-span-4 relative group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#161E54] to-[#2A3470] rounded-3xl transform rotate-3 scale-[1.02] opacity-20 transition-transform group-hover:rotate-6"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#9B8EC7] to-[#7E74C9] rounded-3xl transform rotate-3 scale-[1.02] opacity-20 transition-transform group-hover:rotate-6"></div>
                     
                     <div className="bg-white rounded-3xl shadow-2xl relative border border-slate-100 flex flex-col h-[580px] transform transition-transform duration-500 group-hover:-translate-y-1">
                         {/* ID Header */}
-                        <div className="bg-[#161E54] p-6 text-center text-white relative">
+                        <div className="bg-[#9B8EC7] p-6 text-center text-white relative">
                             {/* Lanyard punch hole visual */}
                             <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-3 bg-white/20 rounded-full"></div>
                             
@@ -178,7 +178,7 @@ const EmployeeProfilePage = () => {
                             </div>
 
                             <div className="text-center w-full mb-8">
-                                <h3 className="text-2xl font-black text-[#161E54] uppercase tracking-tighter" style={{wordBreak: 'break-word'}}>{profile?.name || 'Authorized User'}</h3>
+                                <h3 className="text-2xl font-black text-[#9B8EC7] uppercase tracking-tighter" style={{wordBreak: 'break-word'}}>{profile?.name || 'Authorized User'}</h3>
                                 <div className="inline-block mt-2 px-4 py-1.5 bg-rose-50 border border-rose-100 rounded-full">
                                     <p className="text-xs font-bold text-[#CE2626] uppercase tracking-widest">{profile?.role}</p>
                                 </div>

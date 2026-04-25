@@ -60,7 +60,7 @@ const TopBar = ({ onToggleSidebar }) => {
                     <input 
                         type="text" 
                         placeholder="Search..." 
-                        className="w-full bg-slate-100/50 border-none rounded-2xl pl-10 md:pl-12 pr-4 py-2.5 md:py-3 text-xs md:text-sm focus:ring-2 focus:ring-[#CE2626]/20 transition-all font-medium"
+                        className="w-full bg-slate-100/50 border-none rounded-2xl pl-10 md:pl-12 pr-4 py-2.5 md:py-3 text-xs md:text-sm focus:ring-2 focus:ring-[#9B8EC7]/20 transition-all font-medium"
                     />
                 </div>
             </div>
@@ -75,7 +75,7 @@ const TopBar = ({ onToggleSidebar }) => {
                     >
                         <Bell size={18} className="md:w-5 md:h-5" />
                         {unreadCount > 0 && (
-                            <span className="absolute -top-1 -right-1 min-w-[16px] md:min-w-[20px] h-4 md:h-5 bg-[#CE2626] text-white text-[8px] md:text-[9px] font-bold flex items-center justify-center rounded-full border-2 border-white px-0.5 md:px-1 animate-bounce">
+                            <span className="absolute -top-1 -right-1 min-w-[16px] md:min-w-[20px] h-4 md:h-5 bg-[#9B8EC7] text-white text-[8px] md:text-[9px] font-bold flex items-center justify-center rounded-full border-2 border-white px-0.5 md:px-1 animate-bounce">
                                 {unreadCount > 99 ? '99+' : unreadCount}
                             </span>
                         )}
@@ -84,12 +84,12 @@ const TopBar = ({ onToggleSidebar }) => {
                     {showNotify && (
                         <div className="absolute right-[-100px] md:right-0 mt-3 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
                             {/* Header */}
-                            <div className="p-4 bg-slate-900 flex items-center justify-between">
+                            <div className="p-4 bg-[#9B8EC7] flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <Bell size={16} className="text-[#CE2626]" />
+                                    <Bell size={16} className="text-[#9B8EC7]" />
                                     <span className="font-black text-white text-sm tracking-wider uppercase">Notifications</span>
                                     {unreadCount > 0 && (
-                                        <span className="bg-[#CE2626] text-white text-[9px] font-bold px-2 py-0.5 rounded-full">{unreadCount} NEW</span>
+                                        <span className="bg-[#9B8EC7] text-white text-[9px] font-bold px-2 py-0.5 rounded-full">{unreadCount} NEW</span>
                                     )}
                                 </div>
                                 {unreadCount > 0 && (

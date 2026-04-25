@@ -113,7 +113,7 @@ const ProfileSettingsPage = () => {
                     <div className="group relative">
                         <div className="bg-white rounded-[2.5rem] border-4 border-slate-900 p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:rotate-2 group-hover:-translate-y-2 relative h-[480px] flex flex-col items-center text-center">
                             {/* Decorative Background */}
-                            <div className="absolute top-0 left-0 w-full h-32 bg-[#CE2626] opacity-10 blur-3xl -mt-16"></div>
+                            <div className="absolute top-0 left-0 w-full h-32 bg-[#9B8EC7] opacity-10 blur-3xl -mt-16"></div>
                             
                             {/* Profile Image with Camera Trigger */}
                             <div className="relative z-10 mb-8 group cursor-pointer mx-auto w-32 h-32" onClick={() => fileInputRef.current.click()}>
@@ -134,7 +134,7 @@ const ProfileSettingsPage = () => {
                             {/* Identity Info */}
                             <div className="relative z-10 space-y-2">
                                 <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">{user?.name || user?.username}</h3>
-                                <div className="inline-block px-4 py-1.5 bg-slate-900 text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
+                                <div className="inline-block px-4 py-1.5 bg-[#9B8EC7] text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
                                     {user?.role}
                                 </div>
                                 <div className="pt-6 space-y-3">
@@ -142,7 +142,7 @@ const ProfileSettingsPage = () => {
                                         <Building2 size={12} className="text-[#CE2626]" /> {user?.department || 'Operations'}
                                     </div>
                                     <div className="flex items-center justify-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
-                                        <Calendar size={12} className="text-[#CE2626]" /> Joined {new Date(user?.joiningDate).toLocaleDateString()}
+                                        <Calendar size={12} className="text-[#9B8EC7]" /> Joined {new Date(user?.joiningDate).toLocaleDateString()}
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +158,7 @@ const ProfileSettingsPage = () => {
                             <button 
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all group ${activeTab === tab ? 'bg-slate-900 text-white shadow-xl' : 'text-slate-500 hover:bg-slate-50'}`}
+                                className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all group ${activeTab === tab ? 'bg-[#9B8EC7] text-white shadow-xl' : 'text-slate-500 hover:bg-slate-50'}`}
                             >
                                 <span className={`text-xs font-black uppercase tracking-widest ${activeTab === tab ? 'text-white' : ''}`}>{tab}</span>
                                 <ChevronRight size={14} className={activeTab === tab ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} />
@@ -175,11 +175,11 @@ const ProfileSettingsPage = () => {
                                 <div className="flex items-start justify-between mb-12">
                                     <div>
                                         <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-3">
-                                            <User className="text-[#CE2626]" size={24} /> Basic Identity Synchronization
+                                            <User className="text-[#9B8EC7]" size={24} /> Basic Identity Synchronization
                                         </h2>
                                         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Personnel Information Protocol</p>
                                     </div>
-                                    {updating && <Loader2 className="animate-spin text-[#CE2626]" size={24} />}
+                                    {updating && <Loader2 className="animate-spin text-[#9B8EC7]" size={24} />}
                                 </div>
 
                                 <form onSubmit={handleProfileSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -187,14 +187,14 @@ const ProfileSettingsPage = () => {
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-3">Full Operational Name</label>
                                         <input 
                                             type="text" name="name" value={profileData.name} onChange={handleProfileChange}
-                                            className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                            className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold focus:ring-4 focus:ring-[#9B8EC7]/10 transition-all"
                                         />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-3">Enterprise Email</label>
                                         <input 
                                             type="email" name="email" value={profileData.email} onChange={handleProfileChange}
-                                            className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                            className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold focus:ring-4 focus:ring-[#9B8EC7]/10 transition-all"
                                         />
                                     </div>
                                     <div className="space-y-2">
