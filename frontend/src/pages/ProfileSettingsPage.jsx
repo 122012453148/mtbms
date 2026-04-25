@@ -111,7 +111,7 @@ const ProfileSettingsPage = () => {
                 <div className="lg:col-span-1 space-y-8">
                     {/* 3D ID CARD */}
                     <div className="group relative">
-                        <div className="bg-white rounded-[2.5rem] border-4 border-slate-900 p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:rotate-2 group-hover:-translate-y-2 relative overflow-hidden h-[450px] flex flex-col items-center justify-center text-center">
+                        <div className="bg-white rounded-[2.5rem] border-4 border-slate-900 p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:rotate-2 group-hover:-translate-y-2 relative h-[450px] flex flex-col items-center justify-center text-center">
                             {/* Decorative Background */}
                             <div className="absolute top-0 left-0 w-full h-32 bg-[#CE2626] opacity-10 blur-3xl -mt-16"></div>
                             
