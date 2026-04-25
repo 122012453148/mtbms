@@ -160,7 +160,7 @@ const EmployeeProfilePage = () => {
                             <div className="relative mb-6">
                                 <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden bg-slate-100 flex items-center justify-center">
                                     {previewUrl || profile?.profileImage ? (
-                                        <img src={previewUrl || profile.profileImage} alt="Profile" className="w-full h-full object-contain" />
+                                        <img src={previewUrl || profile.profileImage} alt="Profile" className="w-full h-full object-cover" />
                                     ) : (
                                         <User size={64} className="text-slate-300" />
                                     )}
