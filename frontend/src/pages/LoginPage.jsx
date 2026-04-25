@@ -41,66 +41,74 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 font-inter">
-            <div className="w-full max-w-sm md:max-w-md">
-                <div className="bg-white rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden">
-                    <div className="bg-[#CE2626] p-10 md:p-14 text-center text-white relative">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-                        <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/20 shadow-xl relative z-10">
-                            <Shield size={32} />
+        <div className="login-bg px-4">
+            {/* Animated Background Orbs */}
+            <div className="circle circle1"></div>
+            <div className="circle circle2"></div>
+            <div className="circle circle3"></div>
+
+            <div className="login-card animate-in fade-in zoom-in duration-700">
+                <div className="flex justify-center mb-8">
+                    <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center border border-white/20 shadow-2xl backdrop-blur-md">
+                        <Shield size={40} className="text-[#2A9D8F]" />
+                    </div>
+                </div>
+
+                <h1 className="login-title">WELCOME TO MTBMS</h1>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="input-group">
+                        <label className="input-label">Identity Access</label>
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-[#2A9D8F]">
+                                <User size={18} />
+                            </span>
+                            <input 
+                                type="text" required
+                                value={username} onChange={(e) => setUsername(e.target.value)}
+                                className="input-box pl-14"
+                                placeholder="Username / ID"
+                            />
                         </div>
-                        <h1 className="text-2xl md:text-3xl font-black tracking-tighter uppercase italic relative z-10 leading-none">Welcome to MTBMS</h1>
-                        <p className="mt-3 text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] relative z-10 italic">Material Tracking & Business Management System</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="p-8 md:p-12 space-y-8">
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] pl-2 italic">Entity Identity</label>
-                            <div className="relative">
-                                <span className="absolute inset-y-0 left-0 pl-6 flex items-center text-[#CE2626]">
-                                    <User size={20} />
-                                </span>
-                                <input 
-                                    type="text" required
-                                    value={username} onChange={(e) => setUsername(e.target.value)}
-                                    className="w-full pl-16 pr-8 py-5 bg-slate-50 border-none rounded-2xl text-[11px] md:text-xs font-bold normal-case tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
-                                    placeholder="Username / ID"
-                                />
-                            </div>
+                    <div className="input-group">
+                        <label className="input-label">Security Key</label>
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-[#2A9D8F]">
+                                <Lock size={18} />
+                            </span>
+                            <input 
+                                type="password" required
+                                value={password} onChange={(e) => setPassword(e.target.value)}
+                                className="input-box pl-14"
+                                placeholder="••••••••"
+                            />
                         </div>
+                    </div>
 
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] pl-2 italic">Access Key</label>
-                            <div className="relative">
-                                <span className="absolute inset-y-0 left-0 pl-6 flex items-center text-[#CE2626]">
-                                    <Lock size={20} />
-                                </span>
-                                <input 
-                                    type="password" required
-                                    value={password} onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-16 pr-8 py-5 bg-slate-50 border-none rounded-2xl text-[11px] md:text-xs font-bold normal-case tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                        </div>
+                    <button 
+                        type="submit" disabled={loading}
+                        className="login-btn group"
+                    >
+                        {loading ? (
+                            <Loader2 className="animate-spin" size={20} />
+                        ) : (
+                            <>
+                                INITIALIZE SESSION
+                                <Shield size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </>
+                        )}
+                    </button>
+                </form>
 
-                        <button 
-                            type="submit" disabled={loading}
-                            className="w-full bg-slate-900 hover:bg-[#CE2626] text-white font-black py-5 rounded-[2rem] transition-all shadow-2xl flex items-center justify-center gap-3 mt-6 hover:scale-[1.02] active:scale-95 text-[10px] md:text-[11px] uppercase tracking-[0.4em] italic"
-                        >
-                            {loading ? <Loader2 className="animate-spin" size={20} /> : 'INITIALIZE SESSION'}
-                        </button>
-                    </form>
-                </div>
-                <div className="mt-10 flex flex-col items-center gap-4">
-                    <p className="text-center text-slate-400 text-[10px] font-black uppercase tracking-[0.3em] italic">
-                        Protocol Secured via RSA-4096
+                <div className="mt-12 text-center">
+                    <p className="text-[9px] font-black text-white/30 uppercase tracking-[0.5em] italic">
+                        Protocol Secured: RSA-4096 / AES-256
                     </p>
-                    <div className="w-1 h-8 bg-slate-200 rounded-full"></div>
                 </div>
             </div>
         </div>
-
     );
 };
 
