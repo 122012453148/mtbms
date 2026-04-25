@@ -44,11 +44,13 @@ const Avatar = ({ name, image, size = 'md', online }) => {
     return (
         <div className="relative inline-block">
             {image ? (
-                <img
-                    src={image}
-                    alt={name}
-                    className={`${sizeClass} rounded-full object-cover ring-4 ring-white shadow-lg`}
-                />
+                <div className={`${sizeClass} rounded-full overflow-hidden ring-4 ring-white shadow-lg bg-white`}>
+                    <img
+                        src={image}
+                        alt={name}
+                        className="w-full h-full object-contain"
+                    />
+                </div>
             ) : (
                 <div
                     className={`${sizeClass} rounded-full ring-4 ring-white shadow-lg flex items-center justify-center font-black text-white select-none`}

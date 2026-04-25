@@ -9,7 +9,7 @@ import {
 import { toast } from 'react-toastify';
 
 // Robust image component with onError fallback
-const StaffMemberImage = ({ src, name, className = "w-full h-full object-cover" }) => {
+const StaffMemberImage = ({ src, name, className = "w-full h-full object-contain" }) => {
     const [error, setError] = useState(false);
 
     const getImageUrl = (imgPath) => {
@@ -145,7 +145,7 @@ const StaffsPage = () => {
 
                                     {/* Profile Photo */}
                                         <div className="relative">
-                                            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-white/30 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2 flex-shrink-0">
+                                            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-white/30 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2 flex-shrink-0 bg-white">
                                                 <StaffMemberImage src={u.profileImage} name={u.name} />
                                             </div>
                                             {/* Online indicator */}
@@ -208,11 +208,11 @@ const StaffsPage = () => {
                         {/* Left – dark profile panel */}
                         <div className="md:w-2/5 bg-slate-950 p-12 text-white flex flex-col items-center justify-center text-center relative overflow-hidden">
                             <div className="absolute inset-0 bg-[#CE2626] opacity-5 blur-[100px]" />
-                            <div className="relative z-10 w-44 h-44 rounded-full border-4 border-[#CE2626]/30 overflow-hidden shadow-2xl mb-8 flex-shrink-0">
+                            <div className="relative z-10 w-44 h-44 rounded-full border-4 border-[#CE2626]/30 overflow-hidden shadow-2xl mb-8 flex-shrink-0 bg-white">
                                 <StaffMemberImage
                                     src={selectedUser.profileImage}
                                     name={selectedUser.name}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-contain"
                                 />
                             </div>
                             <h2 className="text-3xl font-black uppercase tracking-tighter italic mb-1 relative z-10">
