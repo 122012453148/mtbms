@@ -116,10 +116,10 @@ const ProfileSettingsPage = () => {
                             <div className="absolute top-0 left-0 w-full h-32 bg-[#CE2626] opacity-10 blur-3xl -mt-16"></div>
                             
                             {/* Profile Image with Camera Trigger */}
-                            <div className="relative z-10 mb-6 group cursor-pointer" onClick={() => fileInputRef.current.click()}>
-                                <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden relative">
+                            <div className="relative z-10 mb-6 group cursor-pointer mx-auto" onClick={() => fileInputRef.current.click()}>
+                                <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white flex items-center justify-center relative">
                                     <img 
-                                        src={preview || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&size=256&background=161E54&color=fff`} 
+                                        src={preview || user?.profileImage || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&size=256&background=161E54&color=fff`} 
                                         alt="profile" 
                                         className="w-full h-full object-cover rounded-full transition-transform group-hover:scale-110"
                                     />
@@ -127,7 +127,7 @@ const ProfileSettingsPage = () => {
                                         <Camera className="text-white" size={24} />
                                     </div>
                                 </div>
-                                <div className="absolute bottom-1 right-1 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full"></div>
+                                <div className="absolute bottom-1 right-1 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full z-20"></div>
                                 <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
                             </div>
 

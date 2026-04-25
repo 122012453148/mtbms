@@ -157,16 +157,16 @@ const EmployeeProfilePage = () => {
                         {/* ID Body */}
                         <div className="p-8 flex flex-col items-center flex-1 relative bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
                             
-                            <div className="relative mb-6">
-                                <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden bg-slate-100 flex items-center justify-center">
+                             <div className="relative mb-6 mx-auto">
+                                <div className="w-28 h-28 rounded-full border-4 border-white shadow-xl overflow-hidden bg-white flex items-center justify-center relative">
                                     {previewUrl || profile?.profileImage ? (
                                         <img src={previewUrl || profile.profileImage} alt="Profile" className="w-full h-full object-cover rounded-full" />
                                     ) : (
-                                        <User size={64} className="text-slate-300" />
+                                        <User size={56} className="text-slate-300" />
                                     )}
                                 </div>
                                 {editing && (
-                                    <label className="absolute bottom-0 right-0 w-10 h-10 bg-[#CE2626] rounded-full text-white flex items-center justify-center cursor-pointer shadow-lg hover:bg-rose-700 transition-colors">
+                                    <label className="absolute bottom-0 right-0 w-10 h-10 bg-[#CE2626] rounded-full text-white flex items-center justify-center cursor-pointer shadow-lg hover:bg-rose-700 transition-colors z-10">
                                         <Camera size={18} />
                                         <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                                     </label>
