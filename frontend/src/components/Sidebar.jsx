@@ -9,7 +9,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ isOpen, onClose }) => {
     const { logout, user } = useAuth();
-    const isEmployee = user?.role === 'employee';
+    const isEmployee = user?.role?.toLowerCase() === 'employee';
 
     const navItems = [
         { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/dashboard' },
@@ -36,11 +36,11 @@ const Sidebar = ({ isOpen, onClose }) => {
                 />
             )}
 
-            <div className={`w-72 ${isEmployee ? 'bg-[#FFF6F6] text-slate-900 border-r border-rose-100' : 'bg-slate-900 text-slate-300'} h-screen fixed left-0 top-0 flex flex-col shadow-2xl z-[60] transition-transform duration-300 lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                <div className={`p-8 border-b ${isEmployee ? 'border-rose-100' : 'border-slate-800/50'} flex items-center justify-between`}>
+            <div className={`w-72 ${isEmployee ? 'bg-[#FFF6F6] text-gray-800 border-r border-rose-100/50' : 'bg-slate-900 text-slate-300'} h-screen fixed left-0 top-0 flex flex-col shadow-2xl z-[60] transition-transform duration-300 lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                <div className={`p-8 border-b ${isEmployee ? 'border-rose-100/50' : 'border-slate-800/50'} flex items-center justify-between`}>
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 bg-[#CE2626] rounded-lg flex items-center justify-center font-bold text-white text-lg">M</div>
-                        <h1 className={`text-lg font-semibold ${isEmployee ? 'text-slate-900' : 'text-white'} tracking-tight`}>MTBMS {user?.role?.toUpperCase()}</h1>
+                        <h1 className={`text-lg font-black ${isEmployee ? 'text-gray-800' : 'text-white'} tracking-tight`}>MTBMS {user?.role?.toUpperCase()}</h1>
                     </div>
                     {/* Mobile Close Button */}
                     <button onClick={onClose} className="lg:hidden p-2 hover:bg-slate-800 rounded-lg text-slate-400">
@@ -54,14 +54,14 @@ const Sidebar = ({ isOpen, onClose }) => {
                         <NavLink
                             to={item.path}
                             className={({ isActive }) => 
-                                `flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all group ${
+                                `flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all duration-300 group ${
                                     isActive 
-                                    ? (isEmployee ? 'bg-[#9B8EC7] text-white shadow-md font-black' : 'bg-[#CE2626] text-white shadow-sm font-black')
-                                    : (isEmployee ? 'text-slate-500 hover:bg-rose-100 hover:text-slate-900 font-medium' : 'text-slate-400 hover:bg-slate-800 hover:text-white font-medium')
+                                    ? (isEmployee ? 'bg-[#9B8EC7] text-white shadow-[0_10px_20px_rgba(155,142,199,0.3)] font-black scale-[1.02]' : 'bg-[#CE2626] text-white shadow-sm font-black')
+                                    : (isEmployee ? 'text-gray-600 hover:bg-[#E5DEFF] hover:text-[#9B8EC7] font-semibold' : 'text-slate-400 hover:bg-slate-800 hover:text-white font-medium')
                                 }`
                             }
                         >
-                            <span className="text-slate-500 group-hover:text-white transition-colors">
+                            <span className={`${isEmployee ? (item.path === window.location.pathname ? 'text-white' : 'text-gray-400 group-hover:text-[#9B8EC7]') : 'text-slate-500 group-hover:text-white'} transition-colors`}>
                                 {item.icon}
                             </span>
                             <span className="text-sm tracking-tight uppercase italic text-[10px]">{item.name}</span>
