@@ -144,7 +144,7 @@ const EmployeeProfilePage = () => {
                 <div className="lg:col-span-4 relative group">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#161E54] to-[#2A3470] rounded-3xl transform rotate-3 scale-[1.02] opacity-20 transition-transform group-hover:rotate-6"></div>
                     
-                    <div className="bg-white rounded-3xl shadow-2xl relative overflow-hidden border border-slate-100 flex flex-col h-full transform transition-transform duration-500 group-hover:-translate-y-1">
+                    <div className="bg-white rounded-3xl shadow-2xl relative border border-slate-100 flex flex-col h-full transform transition-transform duration-500 group-hover:-translate-y-1">
                         {/* ID Header */}
                         <div className="bg-[#161E54] p-6 text-center text-white relative">
                             {/* Lanyard punch hole visual */}
