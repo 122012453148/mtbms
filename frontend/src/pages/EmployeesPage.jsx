@@ -79,7 +79,7 @@ const EmployeeCard = ({ employee, onClick }) => {
             className="group relative bg-white rounded-2xl shadow-md hover:shadow-2xl border border-slate-100/80 hover:border-slate-200 cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.015]"
         >
             {/* Top gradient accent */}
-            <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${getPerfColor(perf)} opacity-80`} />
+            <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${getPerfColor(perf)} opacity-80 rounded-t-2xl`} />
 
             {/* Card Body */}
             <div className="p-6">

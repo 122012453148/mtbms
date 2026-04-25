@@ -137,7 +137,7 @@ const StaffsPage = () => {
                             <div className="bg-slate-950 h-full w-full rounded-[2.3rem] relative flex flex-col">
 
                                 {/* Card Header – red gradient zone */}
-                                <div className="min-h-[180px] bg-gradient-to-b from-[#CE2626] via-[#CE2626]/70 to-transparent relative p-6 flex justify-between items-start overflow-visible">
+                                <div className="min-h-[180px] bg-gradient-to-b from-[#CE2626] via-[#CE2626]/70 to-transparent relative p-6 flex justify-between items-start overflow-visible rounded-t-[2.3rem]">
                                     {/* Logo badge */}
                                     <div>
                                         <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center font-black text-white text-sm italic border border-white/10">S</div>
