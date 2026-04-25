@@ -48,7 +48,7 @@ const Avatar = ({ name, image, size = 'md', online }) => {
                     <img
                         src={image}
                         alt={name}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain rounded-full"
                     />
                 </div>
             ) : (
@@ -76,7 +76,7 @@ const EmployeeCard = ({ employee, onClick }) => {
     return (
         <div
             onClick={() => onClick(employee)}
-            className="group relative bg-white rounded-2xl shadow-md hover:shadow-2xl border border-slate-100/80 hover:border-slate-200 cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.015] overflow-hidden"
+            className="group relative bg-white rounded-2xl shadow-md hover:shadow-2xl border border-slate-100/80 hover:border-slate-200 cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.015]"
         >
             {/* Top gradient accent */}
             <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${getPerfColor(perf)} opacity-80`} />

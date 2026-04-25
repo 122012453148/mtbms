@@ -134,7 +134,7 @@ const StaffsPage = () => {
                             onClick={() => setSelectedUser(u)}
                             className="group relative h-[450px] p-[2px] bg-gradient-to-br from-[#CE2626] to-slate-950 rounded-[2.5rem] shadow-2xl cursor-pointer transition-all duration-500 hover:-translate-y-4 hover:rotate-1"
                         >
-                            <div className="bg-slate-950 h-full w-full rounded-[2.3rem] overflow-hidden relative flex flex-col">
+                            <div className="bg-slate-950 h-full w-full rounded-[2.3rem] relative flex flex-col">
 
                                 {/* Card Header – red gradient zone */}
                                 <div className="h-2/5 bg-gradient-to-b from-[#CE2626] via-[#CE2626]/70 to-transparent relative p-6 flex justify-between items-start">
@@ -144,13 +144,13 @@ const StaffsPage = () => {
                                     </div>
 
                                     {/* Profile Photo */}
-                                        <div className="relative">
-                                            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-white/30 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2 flex-shrink-0 bg-white">
-                                                <StaffMemberImage src={u.profileImage} name={u.name} />
-                                            </div>
-                                            {/* Online indicator */}
-                                            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-slate-950 animate-pulse" />
+                                    <div className="relative">
+                                        <div className="w-[90px] h-[90px] rounded-full overflow-hidden border-2 border-white/30 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2 flex-shrink-0 bg-white">
+                                            <StaffMemberImage src={u.profileImage} name={u.name} />
                                         </div>
+                                        {/* Online indicator */}
+                                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-slate-950 animate-pulse" />
+                                    </div>
                                 </div>
 
                                 {/* Card Body */}

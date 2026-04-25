@@ -177,11 +177,11 @@ const TopBar = ({ onToggleSidebar }) => {
                         onClick={() => setShowProfile(v => !v)}
                         className="flex flex-col items-center justify-center hover:scale-105 transition-all duration-300 p-1"
                     >
-                        <div className="relative">
+                        <div className="relative w-[45px] h-[45px] rounded-full overflow-hidden border-2 border-slate-200 shadow-md bg-white">
                             <img 
                                 src={user?.profileImage || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&background=161E54&color=fff`}
                                 alt="profile"
-                                className="w-16 h-16 rounded-full object-cover border-2 border-slate-200 shadow-md"
+                                className="w-full h-full object-cover rounded-full"
                             />
                             <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></div>
                         </div>
