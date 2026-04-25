@@ -8,7 +8,8 @@ import {
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ isOpen, onClose }) => {
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
+    const isEmployee = user?.role === 'employee';
 
     const navItems = [
         { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/dashboard' },
@@ -35,11 +36,11 @@ const Sidebar = ({ isOpen, onClose }) => {
                 />
             )}
 
-            <div className={`w-72 bg-slate-900 h-screen fixed left-0 top-0 text-slate-300 flex flex-col shadow-2xl z-[60] transition-transform duration-300 lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                <div className="p-8 border-b border-slate-800/50 flex items-center justify-between">
+            <div className={`w-72 ${isEmployee ? 'bg-[#FFF6F6] text-slate-900 border-r border-rose-100' : 'bg-slate-900 text-slate-300'} h-screen fixed left-0 top-0 flex flex-col shadow-2xl z-[60] transition-transform duration-300 lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                <div className={`p-8 border-b ${isEmployee ? 'border-rose-100' : 'border-slate-800/50'} flex items-center justify-between`}>
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 bg-[#CE2626] rounded-lg flex items-center justify-center font-bold text-white text-lg">M</div>
-                        <h1 className="text-lg font-semibold text-white tracking-tight">MTBMS ADMIN</h1>
+                        <h1 className={`text-lg font-semibold ${isEmployee ? 'text-slate-900' : 'text-white'} tracking-tight`}>MTBMS {user?.role?.toUpperCase()}</h1>
                     </div>
                     {/* Mobile Close Button */}
                     <button onClick={onClose} className="lg:hidden p-2 hover:bg-slate-800 rounded-lg text-slate-400">
@@ -55,8 +56,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                             className={({ isActive }) => 
                                 `flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all group ${
                                     isActive 
-                                    ? 'bg-[#CE2626] text-white shadow-sm font-black' 
-                                    : 'text-slate-400 hover:bg-slate-800 hover:text-white font-medium'
+                                    ? (isEmployee ? 'bg-[#9B8EC7] text-white shadow-md font-black' : 'bg-[#CE2626] text-white shadow-sm font-black')
+                                    : (isEmployee ? 'text-slate-500 hover:bg-rose-100 hover:text-slate-900 font-medium' : 'text-slate-400 hover:bg-slate-800 hover:text-white font-medium')
                                 }`
                             }
                         >
@@ -86,10 +87,10 @@ const Sidebar = ({ isOpen, onClose }) => {
                 ))}
             </nav>
 
-            <div className="p-4 border-t border-slate-800">
+            <div className={`p-4 border-t ${isEmployee ? 'border-rose-100' : 'border-slate-800'}`}>
                 <button 
                     onClick={logout}
-                    className="w-full flex items-center gap-4 px-4 py-4 rounded-xl text-slate-400 hover:bg-rose-500/10 hover:text-rose-500 transition-all font-bold"
+                    className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all font-bold ${isEmployee ? 'text-slate-500 hover:bg-rose-500/10 hover:text-rose-600' : 'text-slate-400 hover:bg-rose-500/10 hover:text-rose-500'}`}
                 >
                     <LogOut size={20} />
                     <span>SESSION LOGOUT</span>

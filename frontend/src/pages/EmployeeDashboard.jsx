@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
-const THEME_COLOR = '#161E54';
+const THEME_COLOR = '#9B8EC7';
 
 const StatCard = ({ title, value, icon, color }) => (
     <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
@@ -148,7 +148,7 @@ const EmployeeDashboard = () => {
                 <div>
                     <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter uppercase italic leading-none">MTBMS Employee Dashboard</h1>
                     <p className="text-[10px] md:text-sm text-slate-500 mt-2 flex items-center gap-2 font-black uppercase tracking-widest italic opacity-60">
-                        <Calendar size={14} className="text-[#CE2626]" /> {todayDateFormatted}
+                        <Calendar size={14} className="text-[#9B8EC7]" /> {todayDateFormatted}
                     </p>
                 </div>
                 
@@ -165,7 +165,8 @@ const EmployeeDashboard = () => {
                     {isCheckedIn && (
                         <button 
                             onClick={handleCheckOut}
-                            className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-8 py-4 rounded-xl md:rounded-2xl bg-rose-600 text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] italic transition-all shadow-xl hover:scale-105 active:scale-95 animate-pulse"
+                            className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-8 py-4 rounded-xl md:rounded-2xl text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] italic transition-all shadow-xl hover:scale-105 active:scale-95 animate-pulse"
+                            style={{ backgroundColor: THEME_COLOR }}
                         >
                             <LogOutIcon size={18} /> CHECK OUT
                         </button>
@@ -191,7 +192,7 @@ const EmployeeDashboard = () => {
                     <div>
                         <div className="flex items-center justify-between mb-10">
                             <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] italic">Shift Status</h3>
-                            <Timer size={20} className="text-[#CE2626]" />
+                            <Timer size={20} className="text-[#9B8EC7]" />
                         </div>
                         <div className="space-y-10 relative z-10">
                             <div className="flex items-center justify-between">
@@ -222,7 +223,7 @@ const EmployeeDashboard = () => {
                         {isCheckedIn && (
                             <div className="text-center">
                                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] mb-2 italic">Active Mission Timer</p>
-                                <p className="text-4xl md:text-5xl font-black text-[#CE2626] tracking-tighter italic">{formatTime(timer)}</p>
+                                <p className="text-4xl md:text-5xl font-black text-[#9B8EC7] tracking-tighter italic">{formatTime(timer)}</p>
                             </div>
                         )}
                         {isFullyDone && (
@@ -242,7 +243,7 @@ const EmployeeDashboard = () => {
                     </div>
                 </div>
 
-                <div className="lg:col-span-2 bg-[#161E54] rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden group">
+                <div className="lg:col-span-2 bg-[#2D2654] rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-1000 group-hover:scale-150"></div>
                     <div className="flex items-center justify-between mb-10 relative z-10">
                         <h3 className="text-[10px] md:text-[11px] font-black text-slate-300 uppercase tracking-[0.4em] italic">Mission Objectives</h3>
