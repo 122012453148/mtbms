@@ -60,13 +60,13 @@ const LoginPage = () => {
                     <div className="input-group">
                         <label className="input-label">Identity Access</label>
                         <div className="relative">
-                            <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-[#2A9D8F]">
+                            <span className="absolute inset-y-0 left-0 pl-6 flex items-center text-[#2A9D8F] pointer-events-none">
                                 <User size={18} />
                             </span>
                             <input 
                                 type="text" required
                                 value={username} onChange={(e) => setUsername(e.target.value)}
-                                className="input-box pl-14"
+                                className="input-box"
                                 placeholder="Username / ID"
                             />
                         </div>
@@ -75,13 +75,13 @@ const LoginPage = () => {
                     <div className="input-group">
                         <label className="input-label">Security Key</label>
                         <div className="relative">
-                            <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-[#2A9D8F]">
+                            <span className="absolute inset-y-0 left-0 pl-6 flex items-center text-[#2A9D8F] pointer-events-none">
                                 <Lock size={18} />
                             </span>
                             <input 
                                 type="password" required
                                 value={password} onChange={(e) => setPassword(e.target.value)}
-                                className="input-box pl-14"
+                                className="input-box"
                                 placeholder="••••••••"
                             />
                         </div>

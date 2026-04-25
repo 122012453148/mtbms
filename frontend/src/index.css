@@ -195,20 +195,24 @@ img {
 
 .input-box {
   width: 100%;
-  padding: 15px 20px;
+  padding: 15px 20px 15px 55px; /* Added explicit left padding for icons */
   border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.05);
   color: white;
   outline: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400; /* Standard font weight */
+  letter-spacing: normal; /* Remove any spacing */
+  text-transform: none; /* Ensure no capitalization */
+  font-family: 'Inter', sans-serif;
 }
 
 .input-box::placeholder {
   color: rgba(255, 255, 255, 0.3);
-  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .input-box:focus {
