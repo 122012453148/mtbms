@@ -9,7 +9,7 @@ import {
 import { toast } from 'react-toastify';
 
 // Robust image component with onError fallback
-const StaffMemberImage = ({ src, name, className = "w-full h-full object-contain" }) => {
+const StaffMemberImage = ({ src, name, className = "w-full h-full object-cover" }) => {
     const [error, setError] = useState(false);
 
     const getImageUrl = (imgPath) => {
@@ -144,13 +144,13 @@ const StaffsPage = () => {
                                     </div>
 
                                     {/* Profile Photo */}
-                                    <div className="relative">
-                                        <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-white/30 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2">
-                                            <StaffMemberImage src={u.profileImage} name={u.name} />
+                                        <div className="relative">
+                                            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-white/30 shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2 flex-shrink-0">
+                                                <StaffMemberImage src={u.profileImage} name={u.name} />
+                                            </div>
+                                            {/* Online indicator */}
+                                            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-slate-950 animate-pulse" />
                                         </div>
-                                        {/* Online indicator */}
-                                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-slate-950 animate-pulse" />
-                                    </div>
                                 </div>
 
                                 {/* Card Body */}
@@ -208,7 +208,7 @@ const StaffsPage = () => {
                         {/* Left – dark profile panel */}
                         <div className="md:w-2/5 bg-slate-950 p-12 text-white flex flex-col items-center justify-center text-center relative overflow-hidden">
                             <div className="absolute inset-0 bg-[#CE2626] opacity-5 blur-[100px]" />
-                            <div className="relative z-10 w-44 h-44 rounded-[2.5rem] border-4 border-[#CE2626]/30 overflow-hidden shadow-2xl mb-8">
+                            <div className="relative z-10 w-44 h-44 rounded-full border-4 border-[#CE2626]/30 overflow-hidden shadow-2xl mb-8 flex-shrink-0">
                                 <StaffMemberImage
                                     src={selectedUser.profileImage}
                                     name={selectedUser.name}
