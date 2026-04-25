@@ -42,16 +42,9 @@ const LoginPage = () => {
 
     return (
         <div className="login-bg px-4">
-            {/* Animated Background Orbs */}
-            <div className="circle circle1"></div>
-            <div className="circle circle2"></div>
-            <div className="circle circle3"></div>
-
             <div className="login-card animate-in fade-in zoom-in duration-700">
-                <div className="flex justify-center mb-8">
-                    <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center border border-white/20 shadow-2xl backdrop-blur-md">
-                        <Shield size={40} className="text-[#2A9D8F]" />
-                    </div>
+                <div className="top-icon-box">
+                    <Shield size={32} />
                 </div>
 
                 <h1 className="login-title">WELCOME TO MTBMS</h1>
@@ -60,7 +53,7 @@ const LoginPage = () => {
                     <div className="input-group">
                         <label className="input-label">Identity Access</label>
                         <div className="relative">
-                            <span className="absolute inset-y-0 left-0 pl-6 flex items-center text-[#2A9D8F] pointer-events-none">
+                            <span className="absolute inset-y-0 left-0 pl-6 flex items-center text-[#d62828] pointer-events-none">
                                 <User size={18} />
                             </span>
                             <input 
@@ -75,7 +68,7 @@ const LoginPage = () => {
                     <div className="input-group">
                         <label className="input-label">Security Key</label>
                         <div className="relative">
-                            <span className="absolute inset-y-0 left-0 pl-6 flex items-center text-[#2A9D8F] pointer-events-none">
+                            <span className="absolute inset-y-0 left-0 pl-6 flex items-center text-[#d62828] pointer-events-none">
                                 <Lock size={18} />
                             </span>
                             <input 
@@ -102,10 +95,8 @@ const LoginPage = () => {
                     </button>
                 </form>
 
-                <div className="mt-12 text-center">
-                    <p className="text-[9px] font-black text-white/30 uppercase tracking-[0.5em] italic">
-                        Protocol Secured: RSA-4096 / AES-256
-                    </p>
+                <div className="protocol-text">
+                    Protocol Secured: RSA-4096 / AES-256
                 </div>
             </div>
         </div>
