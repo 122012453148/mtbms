@@ -177,13 +177,16 @@ const TopBar = ({ onToggleSidebar }) => {
                         onClick={() => setShowProfile(v => !v)}
                         className="flex flex-col items-center justify-center hover:scale-105 transition-all duration-300 p-1"
                     >
-                        <div className="relative w-[45px] h-[45px] rounded-full overflow-hidden border-2 border-slate-200 shadow-md bg-white">
-                            <img 
-                                src={user?.profileImage || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&background=161E54&color=fff`}
-                                alt="profile"
-                                className="w-full h-full object-cover rounded-full"
-                            />
-                            <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></div>
+                        <div className="relative group cursor-pointer">
+                            <div className="w-11 h-11 rounded-full border-2 border-white shadow-md overflow-hidden bg-slate-50 relative">
+                                <img 
+                                    src={user?.profileImage || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&background=161E54&color=fff`}
+                                    alt="profile"
+                                    className="w-full h-full object-cover object-center"
+                                />
+                            </div>
+                            {/* Online Status Indicator - Outside the overflow-hidden div */}
+                            <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full shadow-sm"></div>
                         </div>
                         <div className="text-center mt-1">
                             <h2 className="text-[11px] font-black text-slate-900 leading-tight uppercase tracking-tighter">
