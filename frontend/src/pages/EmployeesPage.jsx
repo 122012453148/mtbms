@@ -335,7 +335,7 @@ const EmployeesPage = () => {
                         placeholder="Search identity or email..."
                         value={search}
                         onChange={e => setSearch(e.target.value)}
-                        className="w-full pl-16 pr-8 py-4 bg-white border border-slate-100 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-900/5 shadow-sm"
+                        className="w-full pl-16 pr-8 py-4 bg-white border border-slate-100 rounded-2xl text-[10px] md:text-xs font-black tracking-widest placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-900/5 shadow-sm"
                     />
                 </div>
                 <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2 lg:pb-0">
@@ -470,7 +470,7 @@ const EmployeesPage = () => {
                                         <label className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2 italic">{field.label}</label>
                                         <input
                                             type={field.type} required={field.required} placeholder={field.placeholder}
-                                            className="w-full p-4 md:p-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight focus:outline-none focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                            className="w-full p-4 md:p-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-tight focus:outline-none focus:ring-4 focus:ring-slate-900/5 transition-all"
                                             value={formData[field.key]}
                                             onChange={e => setFormData({ ...formData, [field.key]: e.target.value })}
                                         />

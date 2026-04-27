@@ -114,7 +114,7 @@ const ProspectMatrix = () => {
                     <div className="relative">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                         <input 
-                            className="pl-12 pr-6 py-4 bg-slate-50 border-none rounded-2xl text-xs font-black uppercase focus:ring-4 focus:ring-slate-900/5 outline-none w-64 tracking-widest"
+                            className="pl-12 pr-6 py-4 bg-slate-50 border-none rounded-2xl text-xs font-black tracking-widest focus:ring-4 focus:ring-slate-900/5 outline-none w-64"
                             placeholder="Identify Prospect..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}

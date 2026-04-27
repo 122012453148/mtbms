@@ -208,7 +208,7 @@ const LeavePage = () => {
                             <div className="space-y-2">
                                 <label className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2 italic">Justification</label>
                                 <textarea 
-                                    className="w-full p-4 md:p-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight resize-none h-28 focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                    className="w-full p-4 md:p-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-tight resize-none h-28 focus:ring-4 focus:ring-slate-900/5 transition-all"
                                     required value={formData.reason} onChange={(e) => setFormData({...formData, reason: e.target.value})}
                                     placeholder="State your reasons for absence..."
                                 />

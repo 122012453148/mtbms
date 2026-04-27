@@ -157,7 +157,7 @@ const MaterialsPage = () => {
                         placeholder="Filter stock or location..." 
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-16 pr-8 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-widest outline-none focus:ring-4 focus:ring-slate-900/5 transition-all"
+                        className="w-full pl-16 pr-8 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[9px] md:text-[10px] font-black tracking-widest outline-none focus:ring-4 focus:ring-slate-900/5 transition-all"
                     />
                 </div>
                 <div className="flex flex-wrap justify-center gap-2 w-full lg:w-auto">
@@ -247,7 +247,7 @@ const MaterialsPage = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                                 <div className="space-y-2 md:col-span-2">
                                     <label className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase ml-2 tracking-widest italic">Material Designation</label>
-                                    <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-4 md:p-5 bg-slate-50 rounded-xl md:rounded-[1.5rem] text-[10px] md:text-xs font-black uppercase outline-none focus:ring-4 focus:ring-slate-900/5 transition-all" placeholder="e.g. GRADE-A STEEL"/>
+                                    <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-4 md:p-5 bg-slate-50 rounded-xl md:rounded-[1.5rem] text-[10px] md:text-xs font-black tracking-tight outline-none focus:ring-4 focus:ring-slate-900/5 transition-all" placeholder="e.g. GRADE-A STEEL"/>
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase ml-2 tracking-widest italic">Opening Stock (MT)</label>
@@ -259,7 +259,7 @@ const MaterialsPage = () => {
                                 </div>
                                 <div className="space-y-2 md:col-span-2">
                                     <label className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase ml-2 tracking-widest italic">Warehouse Grid</label>
-                                    <input type="text" required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full p-4 md:p-5 bg-slate-50 rounded-xl md:rounded-[1.5rem] text-[10px] md:text-xs font-black uppercase outline-none focus:ring-4 focus:ring-slate-900/5" placeholder="e.g. DEPOT-7 NORTH"/>
+                                    <input type="text" required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full p-4 md:p-5 bg-slate-50 rounded-xl md:rounded-[1.5rem] text-[10px] md:text-xs font-black tracking-tight outline-none focus:ring-4 focus:ring-slate-900/5" placeholder="e.g. DEPOT-7 NORTH"/>
                                 </div>
                             </div>
                             <button className="w-full py-5 md:py-6 bg-[#CE2626] text-white rounded-xl md:rounded-[2rem] font-black text-[10px] md:text-[11px] uppercase tracking-[0.5em] italic shadow-2xl shadow-rose-500/30 hover:scale-[1.02] transition-all mt-2">

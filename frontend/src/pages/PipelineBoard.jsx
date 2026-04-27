@@ -231,8 +231,8 @@ const PipelineBoard = () => {
                                     <div className="relative">
                                         <Building2 className="absolute left-5 top-1/2 -translate-y-1/2 text-[#CE2626]" size={18} />
                                         <input 
-                                            required placeholder="e.g. GLOBAL LOGISTICS CORP"
-                                            className="w-full pl-16 pr-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                            required placeholder="e.g. Global Logistics Corp"
+                                            className="w-full pl-16 pr-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
                                             value={formData.companyName} onChange={e => setFormData({...formData, companyName: e.target.value})}
                                         />
                                     </div>
@@ -241,8 +241,8 @@ const PipelineBoard = () => {
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2 italic">Liaison Profile</label>
                                     <input 
-                                        placeholder="FULL NAME"
-                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                        placeholder="Full Name"
+                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
                                         value={formData.contactPerson} onChange={e => setFormData({...formData, contactPerson: e.target.value})}
                                     />
                                 </div>
@@ -250,8 +250,8 @@ const PipelineBoard = () => {
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2 italic">Digital Comms Link</label>
                                     <input 
-                                        type="email" placeholder="EMAIL ADDRESS"
-                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                        type="email" placeholder="Email Address"
+                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
                                         value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
                                     />
                                 </div>
@@ -259,8 +259,8 @@ const PipelineBoard = () => {
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2 italic">Frequency Signal</label>
                                     <input 
-                                        placeholder="PHONE FREQUENCY"
-                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                        placeholder="Phone Frequency"
+                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
                                         value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}
                                     />
                                 </div>
@@ -283,7 +283,7 @@ const PipelineBoard = () => {
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2 italic">Payload Required (T)</label>
                                     <input 
                                         type="number" placeholder="00.00"
-                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
                                         value={formData.requirement} onChange={e => setFormData({...formData, requirement: e.target.value})}
                                     />
                                 </div>
@@ -292,7 +292,7 @@ const PipelineBoard = () => {
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2 italic">Estimated Valuation</label>
                                     <input 
                                         type="number" placeholder="₹00.00"
-                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-tight focus:ring-4 focus:ring-slate-900/5 transition-all"
                                         value={formData.budget} onChange={e => setFormData({...formData, budget: e.target.value})}
                                     />
                                 </div>
@@ -313,7 +313,7 @@ const PipelineBoard = () => {
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2 italic">Operational Context</label>
                                     <textarea 
                                         placeholder="Rationalize lead context..."
-                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-tight h-28 resize-none focus:ring-4 focus:ring-slate-900/5 transition-all"
+                                        className="w-full px-6 py-4 md:py-5 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-tight h-28 resize-none focus:ring-4 focus:ring-slate-900/5 transition-all"
                                         value={formData.notes} onChange={e => setFormData({...formData, notes: e.target.value})}
                                     />
                                 </div>
