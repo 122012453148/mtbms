@@ -18,10 +18,14 @@ const AttendanceHistory = () => {
             const { data } = await api.get('/attendance/my');
             setHistory(data);
             
-            const todayStr = new Date().toISOString().split('T')[0];
+            const todayStr = new Date().toDateString();
             const todayRec = (data || []).find(r => {
                 if (!r.date) return false;
-                return new Date(r.date).toISOString().split('T')[0] === todayStr;
+                try {
+                    return new Date(r.date).toDateString() === todayStr;
+                } catch (e) {
+                    return false;
+                }
             });
             setTodayRecord(todayRec);
         } catch (error) {

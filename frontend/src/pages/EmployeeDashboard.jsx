@@ -42,13 +42,12 @@ const EmployeeDashboard = () => {
     const syncAttendance = async () => {
         try {
             const { data: history } = await api.get('/attendance/my');
-            const todayStr = new Date().toISOString().split('T')[0];
+            const todayStr = new Date().toDateString();
             
             const found = (history || []).find(r => {
                 if (!r.date) return false;
                 try {
-                    const d = new Date(r.date);
-                    return !isNaN(d.getTime()) && d.toISOString().split('T')[0] === todayStr;
+                    return new Date(r.date).toDateString() === todayStr;
                 } catch (e) {
                     return false;
                 }
