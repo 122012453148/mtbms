@@ -43,12 +43,12 @@ const EmployeeDashboard = () => {
             
             const isToday = (dateString) => {
                 if (!dateString) return false;
-                const d = new Date(dateString);
-                const today = new Date();
-                return d.toDateString() === today.toDateString();
+                const d = new Date(dateString).toISOString().split('T')[0];
+                const today = new Date().toISOString().split('T')[0];
+                return d === today;
             };
 
-            const todayRecord = history.find(r => isToday(r.date));
+            const todayRecord = (history || []).find(r => isToday(r.date));
             
             if (todayRecord) {
                 const checkedIn = !!todayRecord.checkIn && !todayRecord.checkOut;
