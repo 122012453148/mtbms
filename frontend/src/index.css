@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-bg: #FFFDEB;
+  --color-brand-bg: #ffffff;
   --color-brand-primary: #CE2626;
   --color-brand-dark: #9B1C1C;
   --font-inter: 'Inter', sans-serif;
@@ -10,7 +10,7 @@
 
 :root {
   font-family: 'Inter', sans-serif;
-  background-color: #FFFDEB;
+  background-color: #ffffff;
 }
 
 html, body {

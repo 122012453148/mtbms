@@ -7,7 +7,7 @@ const ManagerLayout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
-        <div className="flex min-h-screen bg-[#FFFDEB] font-inter overflow-x-hidden">
+        <div className="flex min-h-screen bg-white font-inter overflow-x-hidden">
             <ManagerSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
             <div className="flex-1 lg:ml-72 flex flex-col min-h-screen min-w-0">
                 <TopBar onToggleSidebar={() => setIsSidebarOpen(true)} />

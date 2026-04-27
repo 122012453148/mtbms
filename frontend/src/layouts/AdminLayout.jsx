@@ -7,7 +7,7 @@ const AdminLayout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
-        <div className="flex min-h-screen bg-[#FFFDEB] font-sans overflow-x-hidden">
+        <div className="flex min-h-screen bg-white font-sans overflow-x-hidden">
             {/* Sidebar with responsive props */}
             <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 

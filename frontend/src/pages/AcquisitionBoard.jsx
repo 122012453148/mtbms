@@ -158,16 +158,16 @@ const AcquisitionBoard = () => {
     return (
         <div className="h-[calc(100vh-140px)] flex flex-col space-y-8 animate-in fade-in duration-500 font-inter font-inter">
             {/* Control Center */}
-            <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center justify-between">
+            <div className="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 uppercase tracking-tighter">Acquisition Board</h1>
+                    <h1 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tighter">Acquisition Board</h1>
                     <p className="text-slate-400 font-black text-[9px] uppercase tracking-[0.4em] italic mt-1">Multi-Tier Fulfillment Command</p>
                 </div>
-                <div className="flex gap-4">
-                    <div className="relative">
+                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                    <div className="relative flex-1 lg:w-64">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                         <input 
-                            className="pl-12 pr-6 py-4 bg-slate-50 border-none rounded-2xl text-xs font-black tracking-widest focus:ring-4 focus:ring-slate-900/5 outline-none w-64"
+                            className="w-full pl-12 pr-6 py-4 bg-slate-50 border-none rounded-2xl text-[10px] md:text-xs font-black tracking-widest focus:ring-4 focus:ring-slate-900/5 outline-none"
                             placeholder="Identify Target..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
@@ -176,7 +176,7 @@ const AcquisitionBoard = () => {
                     {(user.role === 'Sales' || user.role === 'Admin') && (
                         <button 
                             onClick={() => setShowCreateModal(true)}
-                            className="bg-[#CE2626] text-white px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-rose-500/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+                            className="bg-[#CE2626] text-white px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-rose-500/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
                         >
                             <Plus size={18} /> Initiate Deal
                         </button>
