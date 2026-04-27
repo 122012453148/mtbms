@@ -42,11 +42,10 @@ const EmployeeDashboard = () => {
             const { data: history } = await api.get('/attendance/my');
             
             const isToday = (dateString) => {
-                const d1 = new Date(dateString);
-                const d2 = new Date();
-                return d1.getFullYear() === d2.getFullYear() &&
-                       d1.getMonth() === d2.getMonth() &&
-                       d1.getDate() === d2.getDate();
+                if (!dateString) return false;
+                const d = new Date(dateString);
+                const today = new Date();
+                return d.toDateString() === today.toDateString();
             };
 
             const todayRecord = history.find(r => isToday(r.date));
@@ -64,13 +63,13 @@ const EmployeeDashboard = () => {
                 if (todayRecord.checkIn) {
                     const start = new Date(todayRecord.checkIn);
                     const end = todayRecord.checkOut ? new Date(todayRecord.checkOut) : new Date();
-                    const diffInSecs = Math.floor((end - start) / 1000);
+                    const diffInSecs = Math.max(0, Math.floor((end - start) / 1000));
                     setTimer(diffInSecs);
                 }
 
                 if (todayRecord.checkIn && todayRecord.checkOut) {
                     const diff = new Date(todayRecord.checkOut) - new Date(todayRecord.checkIn);
-                    setDuration(formatTime(Math.floor(diff / 1000)));
+                    setDuration(formatTime(Math.max(0, Math.floor(diff / 1000))));
                 }
             } else {
                 setIsCheckedIn(false);
@@ -102,13 +101,17 @@ const EmployeeDashboard = () => {
 
     useEffect(() => {
         let interval;
-        if (isCheckedIn) {
+        if (isCheckedIn && punchState.checkInRaw) {
+            // Recalculate timer precisely every interval to avoid drift and fix refresh issues
             interval = setInterval(() => {
-                setTimer(prev => prev + 1);
+                const start = new Date(punchState.checkInRaw);
+                const now = new Date();
+                const diffInSecs = Math.max(0, Math.floor((now - start) / 1000));
+                setTimer(diffInSecs);
             }, 1000);
         }
         return () => clearInterval(interval);
-    }, [isCheckedIn]);
+    }, [isCheckedIn, punchState.checkInRaw]);
 
     const handleCheckIn = async () => {
         setIsCheckedIn(true); // Immediate visual feedback
