@@ -54,22 +54,22 @@ const Dashboard = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header + Filter */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            {/* Header + Filter Container */}
+            <div className="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tighter italic">MTBMS Dashboard</h1>
-                    <p className="text-xs md:text-sm text-slate-500 mt-1 font-medium">Real-time performance metrics across all units</p>
+                    <h1 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tighter italic leading-none">MTBMS Admin Dashboard</h1>
+                    <p className="text-[10px] md:text-sm text-slate-500 mt-2 font-medium uppercase tracking-widest opacity-60">Real-time performance metrics across all units</p>
                 </div>
                 
-                <div className="flex items-center gap-1.5 p-1.5 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto no-scrollbar">
+                <div className="flex items-center gap-1.5 p-1.5 bg-slate-50 rounded-2xl border border-slate-100 overflow-x-auto no-scrollbar w-full lg:w-auto">
                     {['Today', 'This Week', 'This Month'].map((f) => (
                         <button
                             key={f}
                             onClick={() => setFilter(f)}
-                            className={`px-4 md:px-5 py-2 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${
+                            className={`flex-1 lg:flex-none px-4 md:px-6 py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${
                                 filter === f 
-                                ? 'bg-[#CE2626] text-white shadow-lg' 
-                                : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'
+                                ? 'bg-[#CE2626] text-white shadow-lg shadow-rose-500/20' 
+                                : 'text-slate-400 hover:text-slate-900 hover:bg-white'
                             }`}
                         >
                             {f}

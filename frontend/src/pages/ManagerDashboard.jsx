@@ -55,20 +55,21 @@ const ManagerDashboard = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500 font-inter">
-            <div className="flex items-center justify-between">
+            {/* Control Center */}
+            <div className="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tighter italic">MTBMS Manager Dashboard</h1>
-                    <p className="text-sm text-slate-500 mt-1">Cross-operational performance and task distribution</p>
+                    <h1 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tighter italic leading-none">MTBMS Manager Dashboard</h1>
+                    <p className="text-[10px] md:text-sm text-slate-500 mt-2 font-black uppercase tracking-widest opacity-60">Cross-operational performance and task distribution</p>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex items-center gap-3 w-full lg:w-auto">
                     <button 
                         onClick={() => navigate('/manager-tasks')}
-                        className="bg-[#CE2626] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-lg flex items-center gap-2 hover:scale-105 active:scale-95"
+                        className="flex-1 lg:flex-none bg-[#CE2626] text-white px-5 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-rose-500/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
                     >
-                        <Plus size={16} /> INITIALIZE TASK
+                        <Plus size={16} /> <span>Initialize Task</span>
                     </button>
-                    <button className="bg-[#161E54] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-lg flex items-center gap-2 hover:scale-105">
-                        <ShieldCheck size={16} /> System Check
+                    <button className="flex-1 lg:flex-none bg-[#161E54] text-white px-5 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl transition-all flex items-center justify-center gap-2 hover:scale-105">
+                        <ShieldCheck size={16} /> <span>System Check</span>
                     </button>
                 </div>
             </div>
