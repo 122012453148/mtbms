@@ -304,7 +304,13 @@ const EmployeeDashboard = () => {
 
                     <div className="mt-12 flex items-center justify-between relative z-10">
                         <div>
-                            <p className="text-4xl font-black text-white tracking-tighter italic">{(tasks.filter(t => t.status === 'Completed').length / (tasks.length || 1) * 100).toFixed(0)}%</p>
+                            {Array.isArray(tasks) && tasks.length > 0 ? (
+                                <p className="text-4xl font-black text-white tracking-tighter italic">
+                                    {(tasks.filter(t => t.status === 'Completed').length / tasks.length * 100).toFixed(0)}%
+                                </p>
+                            ) : (
+                                <p className="text-4xl font-black text-white tracking-tighter italic">0%</p>
+                            )}
                             <p className="text-[9px] font-black text-white/50 uppercase tracking-widest mt-1 italic">Objective Completion Rate</p>
                         </div>
                         <button className="px-8 py-4 bg-white text-[#9B8EC7] rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl italic">
