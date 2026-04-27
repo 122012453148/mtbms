@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import { toast } from 'react-toastify';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 
 const reportData = [
@@ -22,11 +22,11 @@ const reportData = [
 ];
 
 const ReportCard = ({ title, description, children, onExport }) => (
-    <div className="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm transition-all hover:shadow-xl group">
+    <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-slate-100 shadow-sm transition-all hover:shadow-xl group">
         <div className="flex justify-between items-start mb-8">
             <div>
-                <h3 className="text-xl font-black text-slate-900 tracking-tighter uppercase">{title}</h3>
-                <p className="text-sm text-slate-500 font-medium italic mt-1">{description}</p>
+                <h3 className="text-lg md:text-xl font-black text-slate-900 tracking-tighter uppercase">{title}</h3>
+                <p className="text-xs md:text-sm text-slate-500 font-medium italic mt-1">{description}</p>
             </div>
             <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button onClick={() => onExport('PDF')} className="p-2.5 bg-slate-50 text-slate-400 hover:text-[#CE2626] rounded-xl transition-all">
@@ -37,7 +37,7 @@ const ReportCard = ({ title, description, children, onExport }) => (
                 </button>
             </div>
         </div>
-        <div className="h-[300px] w-full">
+        <div className="h-[250px] md:h-[300px] w-full">
             {children}
         </div>
     </div>
@@ -56,7 +56,7 @@ const ReportsPage = () => {
             doc.text(`Generated on: ${new Date().toLocaleString()}`, 20, 40);
 
             const tableData = reportData.map(row => [row.name, row.sales, row.usage, row.profit]);
-            doc.autoTable({
+            autoTable(doc, {
                 head: [['Week', 'Gross Sales ($)', 'Resource Usage', 'Net Profit ($)']],
                 body: tableData,
                 startY: 50,
@@ -75,18 +75,25 @@ const ReportsPage = () => {
     };
 
     return (
-        <div className="space-y-12">
-            <div className="flex items-center justify-between">
+        <div className="space-y-8 md:space-y-12">
+            {/* Executive Control Header */}
+            <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3.5rem] border border-slate-100 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">Executive Reports</h1>
-                    <p className="text-slate-500 font-medium mt-1">Generated analytics and data exports for business stakeholders</p>
+                    <h1 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">Executive Reports</h1>
+                    <p className="text-[10px] md:text-sm text-slate-500 font-black uppercase tracking-widest mt-3 opacity-60 italic">Strategic Analysis & Data Protocol</p>
                 </div>
-                <div className="flex gap-4">
-                    <button onClick={() => handleExport('EXCEL')} className="px-6 py-3.5 bg-slate-900 text-white rounded-2xl text-sm font-black flex items-center gap-3 shadow-xl">
-                        <FileText size={18} /> EXCEL EXPORT
+                <div className="flex items-center gap-3 w-full lg:w-auto">
+                    <button 
+                        onClick={() => handleExport('EXCEL')} 
+                        className="flex-1 lg:flex-none px-4 md:px-8 py-3 md:py-4 bg-slate-900 text-white rounded-xl md:rounded-[2rem] text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 md:gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all"
+                    >
+                        <FileText size={16} /> <span className="truncate">Excel Export</span>
                     </button>
-                    <button onClick={() => handleExport('PDF')} className="px-6 py-3.5 bg-[#CE2626] text-white rounded-2xl text-sm font-black flex items-center gap-3 shadow-xl">
-                        <Download size={18} /> PDF REPORT
+                    <button 
+                        onClick={() => handleExport('PDF')} 
+                        className="flex-1 lg:flex-none px-4 md:px-8 py-3 md:py-4 bg-[#CE2626] text-white rounded-xl md:rounded-[2rem] text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 md:gap-3 shadow-xl shadow-rose-500/20 hover:scale-105 active:scale-95 transition-all"
+                    >
+                        <Download size={16} /> <span className="truncate">PDF Report</span>
                     </button>
                 </div>
             </div>
