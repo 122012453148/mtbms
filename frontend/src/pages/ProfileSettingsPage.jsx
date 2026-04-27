@@ -111,30 +111,30 @@ const ProfileSettingsPage = () => {
                 <div className="lg:col-span-1 space-y-8">
                     {/* 3D ID CARD */}
                     <div className="group relative">
-                        <div className="bg-white rounded-[2.5rem] border-4 border-slate-900 p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:rotate-2 group-hover:-translate-y-2 relative h-[480px] flex flex-col items-center text-center">
+                        <div className="bg-white rounded-[2.5rem] border-4 border-slate-900 p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:rotate-2 group-hover:-translate-y-2 relative flex flex-col items-center text-center overflow-visible">
                             {/* Decorative Background */}
                             <div className="absolute top-0 left-0 w-full h-32 bg-[#9B8EC7] opacity-10 blur-3xl -mt-16"></div>
                             
                             {/* Profile Image with Camera Trigger */}
-                            <div className="relative mb-8 group cursor-pointer mx-auto">
+                            <div className="relative mb-8 group cursor-pointer mx-auto z-30">
                                 <div 
-                                    className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden relative flex items-center justify-center bg-slate-50"
+                                    className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden relative flex items-center justify-center bg-slate-50 isolate"
                                     onClick={() => fileInputRef.current.click()}
                                 >
                                     <img 
                                         src={preview || user?.profileImage || `https://ui-avatars.com/api/?name=${user?.name || user?.username}&size=256&background=161E54&color=fff`} 
                                         alt="profile" 
-                                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110 block"
                                     />
                                     
                                     {/* Camera Overlay */}
-                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
                                         <Camera className="text-white" size={28} />
                                     </div>
                                 </div>
                                 
                                 {/* Online Status Indicator - Outside the overflow-hidden div */}
-                                <div className="absolute bottom-1 right-1 w-7 h-7 bg-emerald-500 border-4 border-white rounded-full shadow-lg"></div>
+                                <div className="absolute bottom-1 right-1 w-7 h-7 bg-emerald-500 border-4 border-white rounded-full shadow-lg z-40"></div>
                                 
                                 <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
                             </div>

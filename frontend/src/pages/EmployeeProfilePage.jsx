@@ -144,7 +144,7 @@ const EmployeeProfilePage = () => {
                 <div className="lg:col-span-4 relative group">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#9B8EC7] to-[#7E74C9] rounded-3xl transform rotate-3 scale-[1.02] opacity-20 transition-transform group-hover:rotate-6"></div>
                     
-                    <div className="bg-white rounded-3xl shadow-2xl relative border border-slate-100 flex flex-col h-[580px] transform transition-transform duration-500 group-hover:-translate-y-1">
+                    <div className="bg-white rounded-3xl shadow-2xl relative border border-slate-100 flex flex-col transform transition-transform duration-500 group-hover:-translate-y-1 overflow-visible pb-10">
                         {/* ID Header */}
                         <div className="bg-[#9B8EC7] p-6 text-center text-white relative">
                             {/* Lanyard punch hole visual */}
@@ -157,13 +157,13 @@ const EmployeeProfilePage = () => {
                         {/* ID Body */}
                         <div className="p-8 flex flex-col items-center flex-1 relative bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
                             
-                             <div className="relative mb-8 mx-auto">
-                                <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden relative flex items-center justify-center bg-white">
+                             <div className="relative mb-8 mx-auto z-30">
+                                <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden relative flex items-center justify-center bg-white isolate">
                                     {previewUrl || profile?.profileImage ? (
                                         <img 
                                             src={previewUrl || profile.profileImage} 
                                             alt="Profile" 
-                                            className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110" 
+                                            className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110 block" 
                                         />
                                     ) : (
                                         <User size={64} className="text-slate-200" />
@@ -171,7 +171,7 @@ const EmployeeProfilePage = () => {
                                 </div>
                                 
                                 {editing && (
-                                    <label className="absolute bottom-0 right-0 w-10 h-10 bg-[#CE2626] rounded-full text-white flex items-center justify-center cursor-pointer shadow-lg hover:bg-rose-700 transition-colors border-2 border-white">
+                                    <label className="absolute bottom-0 right-0 w-10 h-10 bg-[#CE2626] rounded-full text-white flex items-center justify-center cursor-pointer shadow-lg hover:bg-rose-700 transition-colors border-2 border-white z-40">
                                         <Camera size={18} />
                                         <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                                     </label>
