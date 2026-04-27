@@ -104,12 +104,15 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     return children;
 };
 
+import { MaterialProvider } from './context/MaterialContext';
+
 const App = () => {
     return (
         <AuthProvider>
-            <NotificationProvider>
-                <Router>
-                    <Routes>
+            <MaterialProvider>
+                <NotificationProvider>
+                    <Router>
+                        <Routes>
                         {/* Entry gateway */}
                         <Route path="/" element={<LoginPage />} />
                         <Route path="/change-password" element={
@@ -230,8 +233,9 @@ const App = () => {
                     <ToastContainer position="bottom-right" theme="colored" hideProgressBar={true} newestOnTop={true} />
                 </Router>
             </NotificationProvider>
-        </AuthProvider>
-    );
+        </MaterialProvider>
+    </AuthProvider>
+);
 };
 
 export default App;

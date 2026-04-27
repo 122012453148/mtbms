@@ -56,6 +56,11 @@ const leadSchema = new mongoose.Schema({
         type: String, // e.g. TATA, JSW
         enum: ['TATA', 'JSW', 'SAIL', 'Vizag Steel', 'Other']
     },
+    materialType: {
+        type: String,
+        enum: ['Steel', 'Electronics', 'Construction'],
+        default: 'Steel'
+    },
     deliveryDate: {
         type: Date
     },

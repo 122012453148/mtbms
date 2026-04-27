@@ -10,11 +10,13 @@ import {
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
 import { useAuth } from '../context/AuthContext';
+import { useMaterial } from '../context/MaterialContext';
 
 const socket = io('https://mtbms.onrender.com');
 
 const ERPPage = () => {
     const { user } = useAuth();
+    const { selectedMaterial, currentMaterial } = useMaterial();
     const [vendors, setVendors] = useState([]);
     const [orders, setOrders] = useState([]);
     const [materials, setMaterials] = useState([]);
@@ -33,11 +35,13 @@ const ERPPage = () => {
         email: '', 
         phone: '', 
         location: '', 
-        materialType: 'Other' 
+        materialType: selectedMaterial,
+        brand: '' 
     });
     const [poForm, setPoForm] = useState({ 
         vendor: '', 
-        material: '', 
+        brand: '', 
+        materialType: selectedMaterial,
         quantity: 1, 
         rate: 0, 
         deliveryDate: '' 
@@ -49,7 +53,8 @@ const ERPPage = () => {
             setPoForm({
                 ...poForm,
                 vendor: vendorId,
-                material: selectedVendor.materialType || 'Other',
+                brand: selectedVendor.brand || selectedVendor.name || '',
+                materialType: selectedMaterial,
                 rate: selectedVendor.defaultRate || 0 
             });
         } else {
@@ -60,9 +65,9 @@ const ERPPage = () => {
     const fetchData = async () => {
         try {
             const [vRes, oRes, mRes, sRes] = await Promise.all([
-                api.get('/vendors'),
-                api.get('/orders'),
-                api.get('/materials'),
+                api.get(`/vendors?materialType=${selectedMaterial}`),
+                api.get(`/orders?materialType=${selectedMaterial}`),
+                api.get(`/materials?materialType=${selectedMaterial}`),
                 api.get('/orders/summary')
             ]);
             setVendors(vRes.data);
@@ -86,7 +91,7 @@ const ERPPage = () => {
             socket.off('orderUpdated');
             socket.off('vendorCreated');
         };
-    }, []);
+    }, [selectedMaterial]);
 
     const handleAddVendor = async (e) => {
         e.preventDefault();

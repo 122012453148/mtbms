@@ -12,6 +12,11 @@ const materialSchema = new mongoose.Schema({
         enum: ['IN STOCK', 'LOW STOCK', 'CRITICAL', 'OUT OF STOCK'],
         default: 'IN STOCK'
     },
+    materialType: { 
+        type: String, 
+        enum: ['Steel', 'Electronics', 'Construction'], 
+        default: 'Steel' 
+    },
     qrCode: String
 }, { timestamps: true });
 

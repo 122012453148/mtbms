@@ -7,7 +7,11 @@ const { getIO } = require('../utils/socket');
 // @route   GET /api/orders
 exports.getOrders = async (req, res) => {
     try {
-        const orders = await Order.find()
+        const { materialType } = req.query;
+        let query = {};
+        if (materialType) query.materialType = materialType;
+
+        const orders = await Order.find(query)
             .populate('vendor', 'name location materialType')
             .populate('createdBy', 'name username')
             .populate('approvedBy', 'name username')
@@ -22,11 +26,12 @@ exports.getOrders = async (req, res) => {
 // @route   POST /api/orders
 exports.createOrder = async (req, res) => {
     try {
-        const { vendor, material, quantity, rate, deliveryDate } = req.body;
+        const { vendor, brand, materialType, quantity, rate, deliveryDate } = req.body;
         
         const order = await Order.create({
             vendor,
-            material,
+            brand,
+            materialType,
             quantity,
             rate,
             deliveryDate,
@@ -71,14 +76,14 @@ exports.deliverOrder = async (req, res) => {
         if (!order) return res.status(404).json({ message: 'Order not found' });
         if (order.status !== 'Approved') return res.status(400).json({ message: 'Only approved orders can be delivered' });
 
-        // Update Inventory
-        // Find material by name (enum matching)
-        let materialItem = await Material.findOne({ name: new RegExp(`^${order.material}$`, 'i') });
+        // Find material by name and type
+        let materialItem = await Material.findOne({ 
+            name: new RegExp(`^${order.brand}$`, 'i'),
+            materialType: order.materialType
+        });
         
         if (!materialItem) {
-            // Auto-initialize if it doesn't exist? Or throw error. 
-            // Better to match existing materials.
-            return res.status(404).json({ message: `Material ${order.material} not found in inventory. Please initialize it first.` });
+            return res.status(404).json({ message: `Material "${order.brand}" (${order.materialType}) not found in inventory. Please initialize it first.` });
         }
 
         // Add quantity to stock

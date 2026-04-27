@@ -7,12 +7,16 @@ const vendorSchema = new mongoose.Schema({
     phone: String,
     address: String,
     location: String, // City/Area
-    materialType: { 
+    brand: { 
         type: String, 
-        enum: ['TATA', 'JSW', 'SAIL', 'Vizag Steel', 'Other'],
         default: 'Other'
     },
-    category: { type: String, default: 'Steel Provider' },
+    materialType: { 
+        type: String, 
+        enum: ['Steel', 'Electronics', 'Construction'],
+        default: 'Steel'
+    },
+    category: { type: String, default: 'General Provider' },
     status: { type: String, enum: ['Active', 'Blacklisted'], default: 'Active' },
     rating: { type: Number, default: 5 },
     defaultRate: { type: Number, default: 0 }

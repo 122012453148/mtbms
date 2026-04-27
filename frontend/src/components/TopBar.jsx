@@ -19,13 +19,19 @@ const TYPE_CONFIG = {
     system:   { icon: Info,           color: 'bg-slate-500',   label: 'System' },
 };
 
+import { useMaterial } from '../context/MaterialContext';
+import { ChevronRight } from 'lucide-react';
+
 const TopBar = ({ onToggleSidebar }) => {
     const { user, logout } = useAuth();
+    const { selectedMaterial, setSelectedMaterial, materials } = useMaterial();
     const { notifications, unreadCount, markReadArea, markAllRead, deleteNotification } = useNotifications();
     const [showProfile, setShowProfile] = useState(false);
     const [showNotify, setShowNotify] = useState(false);
     const notifyRef = useRef(null);
     const profileRef = useRef(null);
+
+    const isInternalStaff = ['Admin', 'Manager', 'Sales', 'HR'].includes(user?.role);
 
     // Close dropdowns on outside click
     useEffect(() => {
@@ -53,7 +59,28 @@ const TopBar = ({ onToggleSidebar }) => {
                     <Menu size={20} />
                 </button>
 
-                <div className="relative w-full">
+                {/* Material Selector - Dynamic for staff roles */}
+                {isInternalStaff && (
+                    <div className="relative group mr-2 hidden md:block">
+                        <select 
+                            value={selectedMaterial}
+                            onChange={(e) => setSelectedMaterial(e.target.value)}
+                            className="appearance-none bg-[#9B8EC7]/5 border-2 border-[#9B8EC7]/10 rounded-2xl pl-10 pr-10 py-2.5 text-[10px] font-black uppercase tracking-widest text-[#9B8EC7] focus:ring-4 focus:ring-[#9B8EC7]/20 outline-none transition-all cursor-pointer hover:border-[#9B8EC7]/30 shadow-sm"
+                        >
+                            {materials.map(m => (
+                                <option key={m.id} value={m.id}>{m.icon} {m.name}</option>
+                            ))}
+                        </select>
+                        <div className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
+                            <Package size={16} className="text-[#9B8EC7]" />
+                        </div>
+                        <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#9B8EC7]">
+                            <ChevronRight size={14} className="rotate-90" />
+                        </div>
+                    </div>
+                )}
+
+                <div className="relative flex-1 max-w-xs">
                     <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
                         <Search size={18} />
                     </span>
@@ -66,6 +93,19 @@ const TopBar = ({ onToggleSidebar }) => {
             </div>
 
             <div className="flex items-center gap-2 md:gap-6">
+                {/* Mobile Material Selector */}
+                {isInternalStaff && (
+                    <button 
+                        onClick={() => {
+                            const nextIndex = (materials.findIndex(m => m.id === selectedMaterial) + 1) % materials.length;
+                            setSelectedMaterial(materials[nextIndex].id);
+                        }}
+                        className="p-2.5 bg-[#9B8EC7]/10 text-[#9B8EC7] rounded-xl md:hidden transition-all active:scale-90"
+                        title="Switch Material"
+                    >
+                        <Package size={20} />
+                    </button>
+                )}
                 {/* ── Notification Bell ── */}
                 <div className="relative" ref={notifyRef}>
                     <button 

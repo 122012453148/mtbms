@@ -30,10 +30,11 @@ exports.createLead = async (req, res, next) => {
 // @route   GET /api/leads
 exports.getLeads = async (req, res, next) => {
     try {
+        const { status, materialType } = req.query;
         const filter = {};
-        if (req.query.status) {
-            filter.status = req.query.status;
-        }
+        if (status) filter.status = status;
+        if (materialType) filter.materialType = materialType;
+
         const leads = await Lead.find(filter).populate('assignedTo', 'name username role');
         res.json(leads);
     } catch (error) {

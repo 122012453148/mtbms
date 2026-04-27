@@ -7,10 +7,14 @@ const orderSchema = new mongoose.Schema({
         required: true
     },
     vendorName: String, // Denormalized for quick view
-    material: {
+    brand: {
         type: String,
-        enum: ['TATA', 'JSW', 'SAIL', 'Vizag Steel', 'Other'],
-        required: true
+        default: 'Other'
+    },
+    materialType: {
+        type: String,
+        enum: ['Steel', 'Electronics', 'Construction'],
+        default: 'Steel'
     },
     quantity: { type: Number, required: true }, // In Tons
     rate: { type: Number, required: true }, // Rate per Ton

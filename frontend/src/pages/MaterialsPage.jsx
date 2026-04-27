@@ -12,10 +12,13 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import { io } from 'socket.io-client';
 
+import { useMaterial } from '../context/MaterialContext';
+
 const socket = io('https://mtbms.onrender.com');
 
 const MaterialsPage = () => {
     const { user } = useAuth();
+    const { selectedMaterial: contextMaterial, currentMaterial } = useMaterial();
     const [materials, setMaterials] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -25,17 +28,18 @@ const MaterialsPage = () => {
     const [showInitModal, setShowInitModal] = useState(false);
     const [showHistoryModal, setShowHistoryModal] = useState(false);
     
-    const [selectedMaterial, setSelectedMaterial] = useState(null);
+    const [activeItem, setActiveItem] = useState(null);
     const [history, setHistory] = useState([]);
     
     const [formData, setFormData] = useState({
-        name: '', category: 'Steel', quantity: '', 
+        name: '', category: 'General', quantity: '', 
         location: '', threshold: 50
     });
 
     const fetchMaterials = async () => {
         try {
-            const { data } = await api.get('/materials');
+            setLoading(true);
+            const { data } = await api.get(`/materials?materialType=${contextMaterial}`);
             setMaterials(data);
         } catch (error) { toast.error('Inventory Sync Failure'); } finally { setLoading(false); }
     };
@@ -46,8 +50,8 @@ const MaterialsPage = () => {
         socket.on('materialUpdated', fetchMaterials);
         socket.on('materialDeleted', fetchMaterials);
         socket.on('stockHistoryCreated', (newHistory) => {
-            if (selectedMaterial && newHistory.materialId === selectedMaterial._id) {
-                fetchHistory(selectedMaterial._id);
+            if (activeItem && newHistory.materialId === activeItem._id) {
+                fetchHistory(activeItem._id);
             }
         });
 
@@ -57,7 +61,7 @@ const MaterialsPage = () => {
             socket.off('materialDeleted');
             socket.off('stockHistoryCreated');
         };
-    }, [selectedMaterial]);
+    }, [contextMaterial, activeItem]);
 
     const fetchHistory = async (id) => {
         try {
@@ -67,7 +71,7 @@ const MaterialsPage = () => {
     };
 
     const handleOpenHistory = (material) => {
-        setSelectedMaterial(material);
+        setActiveItem(material);
         fetchHistory(material._id);
         setShowHistoryModal(true);
     };
@@ -75,10 +79,10 @@ const MaterialsPage = () => {
     const handleInitResource = async (e) => {
         e.preventDefault();
         try {
-            await api.post('/materials', formData);
+            await api.post('/materials', { ...formData, materialType: contextMaterial });
             toast.success('Inventory Record Initialized');
             setShowInitModal(false);
-            setFormData({ name: '', category: 'Steel', quantity: '', location: '', threshold: 50 });
+            setFormData({ name: '', category: 'General', quantity: '', location: '', threshold: 50 });
             fetchMaterials();
         } catch (error) {
             toast.error(error.response?.data?.message || 'Initialization failed');
@@ -117,8 +121,12 @@ const MaterialsPage = () => {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 md:gap-8 bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-full blur-3xl -mr-32 -mt-32"></div>
                 <div className="relative z-10 text-center lg:text-left">
+                    <div className="flex items-center gap-3 mb-2 justify-center lg:justify-start">
+                        <span className="text-2xl">{currentMaterial.icon}</span>
+                        <span className="px-3 py-1 bg-[#9B8EC7]/10 text-[#9B8EC7] text-[9px] font-black uppercase tracking-widest rounded-full">{currentMaterial.name} Inventory</span>
+                    </div>
                     <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter uppercase italic">Inventory Dashboard</h1>
-                    <p className="text-slate-400 font-black text-[9px] md:text-[10px] uppercase tracking-[0.4em] mt-1 italic">Real-time Stock Monitoring & Movement Tracking</p>
+                    <p className="text-slate-400 font-black text-[9px] md:text-[10px] uppercase tracking-[0.4em] mt-1 italic">Real-time Stock Monitoring & Movement Tracking · Unit: {currentMaterial.unit}</p>
                 </div>
                 <div className="relative z-10 flex justify-center lg:justify-end gap-4 w-full lg:w-auto">
                     <button 
@@ -179,14 +187,18 @@ const MaterialsPage = () => {
                         <thead className="bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] border-b border-slate-100">
                             <tr>
                                 <th className="px-6 md:px-12 py-6 md:py-10">Material Identity</th>
-                                <th className="px-4 md:px-8 py-6 md:py-10 text-center">Net Vol (MT)</th>
+                                <th className="px-4 md:px-8 py-6 md:py-10 text-center">Quantity ({currentMaterial.unit})</th>
                                 <th className="px-4 md:px-8 py-6 md:py-10">Stock Health</th>
                                 <th className="px-4 md:px-8 py-6 md:py-10 italic">Location</th>
                                 <th className="px-6 md:px-12 py-6 md:py-10 text-right">Records</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50">
-                            {filteredMaterials.map((item) => (
+                            {filteredMaterials.length === 0 ? (
+                                <tr><td colSpan={5} className="px-12 py-24 text-center">
+                                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest italic">No {currentMaterial.name} inventory found. Initialize stock to begin.</p>
+                                </td></tr>
+                            ) : filteredMaterials.map((item) => (
                                 <tr key={item._id} className="group hover:bg-slate-50/50 transition-all cursor-pointer" onClick={() => handleOpenHistory(item)}>
                                     <td className="px-6 md:px-12 py-6 md:py-10">
                                         <div className="flex items-center gap-4 md:gap-6">
@@ -202,7 +214,7 @@ const MaterialsPage = () => {
                                     <td className="px-4 md:px-8 py-6 md:py-10 text-center">
                                         <div className="inline-flex flex-col items-center">
                                             <p className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter leading-none">{item.quantity}</p>
-                                            <p className="text-[8px] md:text-[9px] font-black text-slate-300 uppercase mt-2 tracking-widest italic">Metric Tons</p>
+                                            <p className="text-[8px] md:text-[9px] font-black text-slate-300 uppercase mt-2 tracking-widest italic">{currentMaterial.unit}</p>
                                         </div>
                                     </td>
                                     <td className="px-4 md:px-8 py-6 md:py-10">
@@ -276,9 +288,9 @@ const MaterialsPage = () => {
                         <div className="p-6 md:p-12 border-b border-slate-100 flex items-center justify-between bg-white sticky top-0 z-20">
                             <div>
                                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                                    <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter uppercase italic truncate max-w-[300px]">{selectedMaterial?.name}</h2>
-                                    <span className={`w-fit px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border ${getStatusColor(selectedMaterial?.status)}`}>
-                                        {selectedMaterial?.status}
+                                    <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter uppercase italic truncate max-w-[300px]">{activeItem?.name}</h2>
+                                    <span className={`w-fit px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border ${getStatusColor(activeItem?.status)}`}>
+                                        {activeItem?.status}
                                     </span>
                                 </div>
                                 <p className="text-[8px] md:text-[9px] font-black text-slate-400 tracking-[0.5em] uppercase mt-2 italic flex items-center gap-2">
@@ -293,12 +305,12 @@ const MaterialsPage = () => {
                                 <div className="p-6 md:p-8 bg-slate-900 text-white rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-800 shadow-xl overflow-hidden relative">
                                     <div className="absolute top-0 right-0 p-2 opacity-10"><TrendingUp size={64}/></div>
                                     <p className="text-[8px] md:text-[9px] font-black text-slate-500 uppercase mb-2 tracking-[0.2em] relative z-10">Current Inventory</p>
-                                    <h4 className="text-3xl md:text-4xl font-black italic relative z-10">{selectedMaterial?.quantity} <span className="text-xs uppercase NOT-italic opacity-40 ml-1">MT</span></h4>
+                                    <h4 className="text-3xl md:text-4xl font-black italic relative z-10">{activeItem?.quantity} <span className="text-xs uppercase NOT-italic opacity-40 ml-1">{currentMaterial.unit}</span></h4>
                                 </div>
                                 <div className="p-6 md:p-8 bg-slate-50 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 shadow-inner">
                                     <p className="text-[8px] md:text-[9px] font-black text-slate-400 uppercase mb-2 tracking-[0.2em]">Safety Threshold</p>
                                     <div className="flex items-center gap-3">
-                                        <h4 className="text-xl md:text-2xl font-black text-slate-900 italic">{selectedMaterial?.threshold} <span className="text-[10px] NOT-italic opacity-30">MT</span></h4>
+                                        <h4 className="text-xl md:text-2xl font-black text-slate-900 italic">{activeItem?.threshold} <span className="text-[10px] NOT-italic opacity-30">{currentMaterial.unit}</span></h4>
                                         <Ruler size={14} className="text-[#CE2626] opacity-30"/>
                                     </div>
                                 </div>

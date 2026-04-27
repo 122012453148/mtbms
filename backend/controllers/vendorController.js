@@ -4,7 +4,11 @@ const Vendor = require('../models/Vendor');
 // @route   GET /api/vendors
 exports.getVendors = async (req, res) => {
     try {
-        const vendors = await Vendor.find().sort('-createdAt');
+        const { materialType } = req.query;
+        let query = {};
+        if (materialType) query.materialType = materialType;
+        
+        const vendors = await Vendor.find(query).sort('-createdAt');
         res.json(vendors);
     } catch (error) {
         res.status(500).json({ message: error.message });

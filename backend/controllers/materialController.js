@@ -27,7 +27,11 @@ const checkAndNotifyLowStock = async (material) => {
 // @route   GET /api/materials
 exports.getMaterials = async (req, res) => {
     try {
-        const materials = await Material.find({}).sort('-updatedAt');
+        const { materialType } = req.query;
+        let query = {};
+        if (materialType) query.materialType = materialType;
+        
+        const materials = await Material.find(query).sort('-updatedAt');
         res.json(materials);
     } catch (error) {
         res.status(500).json({ message: error.message });

@@ -9,10 +9,12 @@ import {
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
 import { BASE_URL } from '../config';
+import { useMaterial } from '../context/MaterialContext';
 
 const socket = io(BASE_URL);
 
 const PipelineBoard = () => {
+    const { selectedMaterial, currentMaterial } = useMaterial();
     const [leads, setLeads] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -34,12 +36,13 @@ const PipelineBoard = () => {
         requirement: '',
         budget: '',
         priority: 'Medium',
-        notes: ''
+        notes: '',
+        materialType: selectedMaterial
     });
 
     const fetchData = async () => {
         try {
-            const { data } = await api.get('/leads');
+            const { data } = await api.get(`/leads?materialType=${selectedMaterial}`);
             setLeads(data);
         } catch (error) {
             toast.error('Pipeline synchronization failed');
@@ -68,7 +71,7 @@ const PipelineBoard = () => {
             socket.off('leadUpdated');
             socket.off('leadDeleted');
         };
-    }, []);
+    }, [selectedMaterial]);
 
     const handleDragStart = (e, leadId) => {
         e.dataTransfer.setData('leadId', leadId);
