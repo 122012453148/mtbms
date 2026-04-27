@@ -60,6 +60,12 @@ const EmployeeDashboard = () => {
                     status: todayRecord.status
                 });
 
+                if (todayRecord.checkIn && !todayRecord.checkOut) {
+                    localStorage.setItem('checkInTime', new Date(todayRecord.checkIn).getTime());
+                } else {
+                    localStorage.removeItem('checkInTime');
+                }
+
                 if (todayRecord.checkIn) {
                     const start = new Date(todayRecord.checkIn);
                     const end = todayRecord.checkOut ? new Date(todayRecord.checkOut) : new Date();
@@ -72,9 +78,16 @@ const EmployeeDashboard = () => {
                     setDuration(formatTime(Math.max(0, Math.floor(diff / 1000))));
                 }
             } else {
-                setIsCheckedIn(false);
-                setPunchState({ checkInRaw: null, checkOutRaw: null, status: null });
-                setTimer(0);
+                // Fallback to localStorage if no server record yet for today
+                const savedCheckIn = localStorage.getItem('checkInTime');
+                if (savedCheckIn) {
+                    setIsCheckedIn(true);
+                    setPunchState(prev => ({ ...prev, checkInRaw: new Date(parseInt(savedCheckIn)) }));
+                } else {
+                    setIsCheckedIn(false);
+                    setPunchState({ checkInRaw: null, checkOutRaw: null, status: null });
+                    setTimer(0);
+                }
             }
 
             const { data: tasksData } = await api.get('/tasks/my');
@@ -95,16 +108,18 @@ const EmployeeDashboard = () => {
 
     useEffect(() => { 
         fetchData(); 
-        const interval = setInterval(fetchData, 5000);
+        const interval = setInterval(fetchData, 10000); // Polling reduced to 10s
         return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
         let interval;
-        if (isCheckedIn && punchState.checkInRaw) {
-            // Recalculate timer precisely every interval to avoid drift and fix refresh issues
+        // Use either server timestamp or localStorage fallback
+        const startTime = punchState.checkInRaw || (localStorage.getItem('checkInTime') ? new Date(parseInt(localStorage.getItem('checkInTime'))) : null);
+        
+        if (isCheckedIn && startTime) {
             interval = setInterval(() => {
-                const start = new Date(punchState.checkInRaw);
+                const start = new Date(startTime);
                 const now = new Date();
                 const diffInSecs = Math.max(0, Math.floor((now - start) / 1000));
                 setTimer(diffInSecs);
@@ -114,26 +129,45 @@ const EmployeeDashboard = () => {
     }, [isCheckedIn, punchState.checkInRaw]);
 
     const handleCheckIn = async () => {
-        setIsCheckedIn(true); // Immediate visual feedback
+        const now = Date.now();
+        localStorage.setItem('checkInTime', now);
+        setIsCheckedIn(true);
+        setPunchState(prev => ({ ...prev, checkInRaw: new Date(now) }));
+
         try {
-            await api.post('/attendance/checkin');
+            const { data } = await api.post('/attendance/checkin');
+            setPunchState({
+                checkInRaw: data.checkIn,
+                checkOutRaw: data.checkOut,
+                status: data.status
+            });
+            localStorage.setItem('checkInTime', new Date(data.checkIn).getTime());
             toast.success('Punched IN: Success');
             fetchData();
         } catch (error) {
-            setIsCheckedIn(false); // Revert on failure
+            localStorage.removeItem('checkInTime');
+            setIsCheckedIn(false);
             toast.error(error.response?.data?.message || 'Check-in failed');
+            fetchData();
         }
     };
 
     const handleCheckOut = async () => {
-        setIsCheckedIn(false); // Immediate visual feedback
+        setIsCheckedIn(false);
+        localStorage.removeItem('checkInTime');
         try {
-            await api.post('/attendance/checkout');
+            const { data } = await api.post('/attendance/checkout');
+            setPunchState({
+                checkInRaw: data.checkIn,
+                checkOutRaw: data.checkOut,
+                status: data.status
+            });
             toast.success('Punched OUT: Recorded');
             fetchData();
         } catch (error) {
-            setIsCheckedIn(true); // Revert on failure
+            setIsCheckedIn(true);
             toast.error(error.response?.data?.message || 'Check-out failed');
+            fetchData();
         }
     };
 
