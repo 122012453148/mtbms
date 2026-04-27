@@ -43,17 +43,25 @@ const EmployeeDashboard = () => {
         try {
             const { data: history } = await api.get('/attendance/my');
             const todayStr = new Date().toISOString().split('T')[0];
+            
             const found = (history || []).find(r => {
                 if (!r.date) return false;
-                return new Date(r.date).toISOString().split('T')[0] === todayStr;
+                try {
+                    const d = new Date(r.date);
+                    return !isNaN(d.getTime()) && d.toISOString().split('T')[0] === todayStr;
+                } catch (e) {
+                    return false;
+                }
             });
 
             if (found) {
                 setTodayRecord(found);
-                if (found.checkIn && !found.checkOut) {
+                const checkInVal = found.checkIn ? new Date(found.checkIn).getTime() : null;
+                
+                if (checkInVal && !found.checkOut) {
                     setIsCheckedIn(true);
-                    setCheckInTime(new Date(found.checkIn).getTime());
-                    localStorage.setItem('checkInTimestamp', new Date(found.checkIn).getTime());
+                    setCheckInTime(checkInVal);
+                    localStorage.setItem('checkInTimestamp', checkInVal.toString());
                 } else {
                     setIsCheckedIn(false);
                     setCheckInTime(null);
