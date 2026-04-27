@@ -180,14 +180,7 @@ const EmployeeDashboard = () => {
                     </div>
                     
                     <div className="mt-4 md:mt-0 flex items-center">
-                        {!isCheckedIn && !isFullyDone ? (
-                            <button 
-                                onClick={handleCheckIn}
-                                className="w-44 px-6 py-3 bg-[#22C55E] text-white text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full shadow-lg hover:bg-green-600 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
-                            >
-                                <LogIn size={18} /> <span>CHECK IN</span>
-                            </button>
-                        ) : isCheckedIn ? (
+                        {isCheckedIn ? (
                             <button 
                                 onClick={handleCheckOut}
                                 className="w-44 px-6 py-3 bg-[#EF4444] text-white text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full shadow-lg hover:bg-red-600 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
@@ -195,9 +188,12 @@ const EmployeeDashboard = () => {
                                 <LogOutIcon size={18} /> <span>CHECK OUT</span>
                             </button>
                         ) : (
-                            <div className="w-44 px-6 py-3 bg-emerald-50 text-emerald-700 text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full border border-emerald-100 flex items-center justify-center gap-3">
-                                <CheckCircle2 size={18} /> <span>SHIFT COMPLETE</span>
-                            </div>
+                            <button 
+                                onClick={handleCheckIn}
+                                className="w-44 px-6 py-3 bg-[#22C55E] text-white text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full shadow-lg hover:bg-green-600 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
+                            >
+                                <LogIn size={18} /> <span>CHECK IN</span>
+                            </button>
                         )}
                     </div>
                 </div>
