@@ -26,78 +26,11 @@ const EmployeeDashboard = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isCheckedIn, setIsCheckedIn] = useState(false);
-    const [punchState, setPunchState] = useState({ checkInRaw: null, checkOutRaw: null, status: null });
-    const [timer, setTimer] = useState(0);
-    const [duration, setDuration] = useState(null);
+    const [checkInTime, setCheckInTime] = useState(null);
+    const [timer, setTimer] = useState("00:00:00");
+    const [todayRecord, setTodayRecord] = useState(null);
     const [tasks, setTasks] = useState([]);
     const [profile, setProfile] = useState(null);
-
-    const fetchData = async () => {
-        try {
-            const { data: statsData } = await api.get('/employee-dashboard/stats');
-            setStats(statsData);
-            const { data: profileData } = await api.get('/auth/me');
-            setProfile(profileData);
-            
-            const { data: history } = await api.get('/attendance/my');
-            
-            const isToday = (dateString) => {
-                if (!dateString) return false;
-                const d = new Date(dateString).toISOString().split('T')[0];
-                const today = new Date().toISOString().split('T')[0];
-                return d === today;
-            };
-
-            const todayRecord = (history || []).find(r => isToday(r.date));
-            
-            if (todayRecord) {
-                const checkedIn = !!todayRecord.checkIn && !todayRecord.checkOut;
-                setIsCheckedIn(checkedIn);
-                
-                setPunchState({
-                    checkInRaw: todayRecord.checkIn,
-                    checkOutRaw: todayRecord.checkOut,
-                    status: todayRecord.status
-                });
-
-                if (todayRecord.checkIn && !todayRecord.checkOut) {
-                    localStorage.setItem('checkInTime', new Date(todayRecord.checkIn).getTime());
-                } else {
-                    localStorage.removeItem('checkInTime');
-                }
-
-                if (todayRecord.checkIn) {
-                    const start = new Date(todayRecord.checkIn);
-                    const end = todayRecord.checkOut ? new Date(todayRecord.checkOut) : new Date();
-                    const diffInSecs = Math.max(0, Math.floor((end - start) / 1000));
-                    setTimer(diffInSecs);
-                }
-
-                if (todayRecord.checkIn && todayRecord.checkOut) {
-                    const diff = new Date(todayRecord.checkOut) - new Date(todayRecord.checkIn);
-                    setDuration(formatTime(Math.max(0, Math.floor(diff / 1000))));
-                }
-            } else {
-                // Fallback to localStorage if no server record yet for today
-                const savedCheckIn = localStorage.getItem('checkInTime');
-                if (savedCheckIn) {
-                    setIsCheckedIn(true);
-                    setPunchState(prev => ({ ...prev, checkInRaw: new Date(parseInt(savedCheckIn)) }));
-                } else {
-                    setIsCheckedIn(false);
-                    setPunchState({ checkInRaw: null, checkOutRaw: null, status: null });
-                    setTimer(0);
-                }
-            }
-
-            const { data: tasksData } = await api.get('/tasks/my');
-            setTasks(tasksData || []);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const formatTime = (seconds) => {
         const hrs = Math.floor(seconds / 3600);
@@ -106,77 +39,127 @@ const EmployeeDashboard = () => {
         return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
-    useEffect(() => { 
-        fetchData(); 
-        const interval = setInterval(fetchData, 10000); // Polling reduced to 10s
-        return () => clearInterval(interval);
-    }, []);
+    const syncAttendance = async () => {
+        try {
+            const { data: history } = await api.get('/attendance/my');
+            const todayStr = new Date().toISOString().split('T')[0];
+            const found = (history || []).find(r => {
+                if (!r.date) return false;
+                return new Date(r.date).toISOString().split('T')[0] === todayStr;
+            });
+
+            if (found) {
+                setTodayRecord(found);
+                if (found.checkIn && !found.checkOut) {
+                    setIsCheckedIn(true);
+                    setCheckInTime(new Date(found.checkIn).getTime());
+                    localStorage.setItem('checkInTimestamp', new Date(found.checkIn).getTime());
+                } else {
+                    setIsCheckedIn(false);
+                    setCheckInTime(null);
+                    localStorage.removeItem('checkInTimestamp');
+                }
+            } else {
+                setTodayRecord(null);
+                setIsCheckedIn(false);
+                setCheckInTime(null);
+                localStorage.removeItem('checkInTimestamp');
+            }
+        } catch (error) {
+            console.error('Attendance sync error:', error);
+        }
+    };
+
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+            const [statsRes, profileRes, tasksRes] = await Promise.all([
+                api.get('/employee-dashboard/stats'),
+                api.get('/auth/me'),
+                api.get('/tasks/my')
+            ]);
+            setStats(statsRes.data);
+            setProfile(profileRes.data);
+            setTasks(tasksRes.data || []);
+            await syncAttendance();
+        } catch (error) {
+            console.error('Dashboard fetch error:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
+        fetchData();
+        const poll = setInterval(syncAttendance, 30000); // Sync with server every 30s
+        return () => clearInterval(poll);
+    }, []);
+
+    // Dedicated Real-Time Timer Effect
+    useEffect(() => {
         let interval;
-        // Use either server timestamp or localStorage fallback
-        const startTime = punchState.checkInRaw || (localStorage.getItem('checkInTime') ? new Date(parseInt(localStorage.getItem('checkInTime'))) : null);
-        
-        if (isCheckedIn && startTime) {
+        const savedTime = localStorage.getItem('checkInTimestamp');
+        const effectiveStartTime = checkInTime || (savedTime ? parseInt(savedTime) : null);
+
+        if (isCheckedIn && effectiveStartTime) {
             interval = setInterval(() => {
-                const start = new Date(startTime);
-                const now = new Date();
-                const diffInSecs = Math.max(0, Math.floor((now - start) / 1000));
-                setTimer(diffInSecs);
+                const now = Date.now();
+                const diff = Math.max(0, Math.floor((now - effectiveStartTime) / 1000));
+                setTimer(formatTime(diff));
             }, 1000);
+        } else {
+            setTimer("00:00:00");
         }
         return () => clearInterval(interval);
-    }, [isCheckedIn, punchState.checkInRaw]);
+    }, [isCheckedIn, checkInTime]);
 
     const handleCheckIn = async () => {
         const now = Date.now();
-        localStorage.setItem('checkInTime', now);
+        // Step 2: Immediately change to Check-out
         setIsCheckedIn(true);
-        setPunchState(prev => ({ ...prev, checkInRaw: new Date(now) }));
-
+        setCheckInTime(now);
+        localStorage.setItem('checkInTimestamp', now);
+        
         try {
             const { data } = await api.post('/attendance/checkin');
-            setPunchState({
-                checkInRaw: data.checkIn,
-                checkOutRaw: data.checkOut,
-                status: data.status
-            });
-            localStorage.setItem('checkInTime', new Date(data.checkIn).getTime());
+            // Sync with actual server time if different
+            const serverTime = new Date(data.checkIn).getTime();
+            setCheckInTime(serverTime);
+            localStorage.setItem('checkInTimestamp', serverTime);
             toast.success('Punched IN: Success');
-            fetchData();
+            syncAttendance();
         } catch (error) {
-            localStorage.removeItem('checkInTime');
-            setIsCheckedIn(false);
-            toast.error(error.response?.data?.message || 'Check-in failed');
-            fetchData();
+            const msg = error.response?.data?.message;
+            if (msg === 'Already checked in today') {
+                syncAttendance(); // Just sync if already checked in
+            } else {
+                setIsCheckedIn(false);
+                setCheckInTime(null);
+                localStorage.removeItem('checkInTimestamp');
+                toast.error(msg || 'Check-in failed');
+            }
         }
     };
 
     const handleCheckOut = async () => {
         setIsCheckedIn(false);
-        localStorage.removeItem('checkInTime');
+        setCheckInTime(null);
+        localStorage.removeItem('checkInTimestamp');
+        
         try {
-            const { data } = await api.post('/attendance/checkout');
-            setPunchState({
-                checkInRaw: data.checkIn,
-                checkOutRaw: data.checkOut,
-                status: data.status
-            });
+            await api.post('/attendance/checkout');
             toast.success('Punched OUT: Recorded');
-            fetchData();
+            syncAttendance();
         } catch (error) {
-            setIsCheckedIn(true);
             toast.error(error.response?.data?.message || 'Check-out failed');
-            fetchData();
+            syncAttendance();
         }
     };
 
     if (loading) return <div className="h-screen flex items-center justify-center"><Loader2 className="animate-spin text-[#9B8EC7]" size={40} /></div>;
 
-    const isFullyDone = punchState.checkInRaw && punchState.checkOutRaw;
-    const checkInTimeFormatted = punchState.checkInRaw ? new Date(punchState.checkInRaw).toLocaleTimeString() : null;
-    const checkOutTimeFormatted = punchState.checkOutRaw ? new Date(punchState.checkOutRaw).toLocaleTimeString() : null;
     const todayDateFormatted = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const isFullyDone = todayRecord?.checkIn && todayRecord?.checkOut;
 
     return (
         <div className="space-y-8 md:space-y-10 animate-in fade-in duration-500 font-inter pb-20">
@@ -190,27 +173,23 @@ const EmployeeDashboard = () => {
                     </div>
                     
                     <div className="mt-4 md:mt-0 flex items-center">
-                        {!punchState.checkInRaw && !isCheckedIn ? (
+                        {!isCheckedIn && !isFullyDone ? (
                             <button 
                                 onClick={handleCheckIn}
                                 className="w-44 px-6 py-3 bg-[#22C55E] text-white text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full shadow-lg hover:bg-green-600 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
                             >
                                 <LogIn size={18} /> <span>CHECK IN</span>
                             </button>
+                        ) : isCheckedIn ? (
+                            <button 
+                                onClick={handleCheckOut}
+                                className="w-44 px-6 py-3 bg-[#EF4444] text-white text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full shadow-lg hover:bg-red-600 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
+                            >
+                                <LogOutIcon size={18} /> <span>CHECK OUT</span>
+                            </button>
                         ) : (
-                            <div className="flex items-center gap-3">
-                                {isCheckedIn ? (
-                                    <button 
-                                        onClick={handleCheckOut}
-                                        className="w-44 px-6 py-3 bg-[#EF4444] text-white text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full shadow-lg hover:bg-red-600 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
-                                    >
-                                        <LogOutIcon size={18} /> <span>CHECK OUT</span>
-                                    </button>
-                                ) : (
-                                    <div className="w-44 px-6 py-3 bg-emerald-50 text-emerald-700 text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full border border-emerald-100 flex items-center justify-center gap-3">
-                                        <CheckCircle2 size={18} /> <span>SHIFT COMPLETE</span>
-                                    </div>
-                                )}
+                            <div className="w-44 px-6 py-3 bg-emerald-50 text-emerald-700 text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full border border-emerald-100 flex items-center justify-center gap-3">
+                                <CheckCircle2 size={18} /> <span>SHIFT COMPLETE</span>
                             </div>
                         )}
                     </div>
@@ -235,26 +214,30 @@ const EmployeeDashboard = () => {
                         <div className="space-y-10 relative z-10">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-5">
-                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${punchState.checkInRaw ? 'bg-[#D1FAE5] text-[#065F46]' : 'bg-slate-50 text-slate-300'}`}>IN</div>
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${todayRecord?.checkIn ? 'bg-[#D1FAE5] text-[#065F46]' : 'bg-slate-50 text-slate-300'}`}>IN</div>
                                     <div>
                                         <p className={`text-xs font-black uppercase tracking-tight italic ${isCheckedIn ? 'text-emerald-600' : 'text-slate-800'}`}>
-                                            {isCheckedIn ? 'Checked In' : 'Check-in Registered'}
+                                            {isCheckedIn ? 'Checked In' : (todayRecord?.checkIn ? 'Check-in Registered' : 'Check-in Pending')}
                                         </p>
-                                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{checkInTimeFormatted || 'Pending Entry'}</p>
+                                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">
+                                            {todayRecord?.checkIn ? new Date(todayRecord.checkIn).toLocaleTimeString() : 'Pending Entry'}
+                                        </p>
                                     </div>
                                 </div>
-                                {punchState.checkInRaw && <CheckCircle2 size={18} className="text-emerald-500" />}
+                                {todayRecord?.checkIn && <CheckCircle2 size={18} className="text-emerald-500" />}
                             </div>
 
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-5">
-                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${punchState.checkOutRaw ? 'bg-[#FEE2E2] text-[#991B1B]' : (isCheckedIn ? 'bg-rose-50 text-rose-600 border border-rose-100' : 'bg-slate-50 text-slate-300')}`}>OUT</div>
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${todayRecord?.checkOut ? 'bg-[#FEE2E2] text-[#991B1B]' : (isCheckedIn ? 'bg-rose-50 text-rose-600 border border-rose-100' : 'bg-slate-50 text-slate-300')}`}>OUT</div>
                                     <div>
                                         <p className={`text-xs font-black uppercase tracking-tight italic ${isCheckedIn ? 'text-rose-600' : 'text-slate-800'}`}>Check-out Logged</p>
-                                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{checkOutTimeFormatted || (isCheckedIn ? 'Session Active' : 'Shift inactive')}</p>
+                                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">
+                                            {todayRecord?.checkOut ? new Date(todayRecord.checkOut).toLocaleTimeString() : (isCheckedIn ? 'Session Active' : 'Shift inactive')}
+                                        </p>
                                     </div>
                                 </div>
-                                {punchState.checkOutRaw ? <CheckCircle2 size={18} className="text-[#9B8EC7]" /> : isCheckedIn && <Clock size={18} className="text-rose-500 animate-pulse" />}
+                                {todayRecord?.checkOut ? <CheckCircle2 size={18} className="text-[#9B8EC7]" /> : isCheckedIn && <Clock size={18} className="text-rose-500 animate-pulse" />}
                             </div>
                         </div>
                     </div>
@@ -263,16 +246,15 @@ const EmployeeDashboard = () => {
                         {isCheckedIn && (
                             <div className="text-center">
                                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] mb-2 italic">Active Mission Timer</p>
-                                <p className="text-4xl md:text-5xl font-black text-[#EF4444] tracking-tighter italic">{formatTime(timer)}</p>
+                                <p className="text-4xl md:text-5xl font-black text-[#EF4444] tracking-tighter italic">{timer}</p>
                             </div>
                         )}
                         {isFullyDone && (
                             <div className="text-center">
                                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] mb-2 italic">Operational Duration</p>
-                                <p className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter italic">{duration}</p>
-                                {punchState.status === 'Absent' && (
-                                    <p className="text-[9px] font-black mt-4 text-rose-500 bg-rose-50 inline-block px-4 py-2 rounded-xl uppercase tracking-widest italic border border-rose-100">Protocol Threshold Not Met</p>
-                                )}
+                                <p className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter italic">
+                                    {formatTime(Math.floor((new Date(todayRecord.checkOut) - new Date(todayRecord.checkIn)) / 1000))}
+                                </p>
                             </div>
                         )}
                         {!isCheckedIn && !isFullyDone && (
@@ -283,41 +265,43 @@ const EmployeeDashboard = () => {
                     </div>
                 </div>
 
-                <div className="lg:col-span-2 bg-[#9B8EC7] rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 text-white shadow-[0_20px_50px_rgba(155,142,199,0.3)] relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#9B8EC7] to-[#7E74C9] rounded-3xl transform rotate-3 scale-[1.02] opacity-20 transition-transform group-hover:rotate-6"></div>
-                    <div className="flex items-center justify-between mb-10 relative z-10">
-                        <h3 className="text-[10px] md:text-[11px] font-black text-slate-300 uppercase tracking-[0.4em] italic">Mission Objectives</h3>
-                        <div className="bg-white/10 p-3 rounded-2xl text-white shadow-xl"><ClipboardList size={20} /></div>
-                    </div>
-                    <div className="space-y-4 md:space-y-6 relative z-10">
-                        {tasks.slice(0, 5).map((t, i) => (
-                            <div 
-                                key={i} 
-                                onClick={() => window.location.href='/employee-tasks'}
-                                className="group bg-white/10 hover:bg-white/20 p-6 rounded-[1.5rem] md:rounded-[2rem] transition-all cursor-pointer flex items-center justify-between border border-white/10 hover:border-white/30 hover:translate-x-2"
-                            >
-                                <div className="flex items-center gap-5">
-                                    <div className={`w-3 h-3 rounded-full ${t.priority === 'High' ? 'bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.8)]' : t.priority === 'Medium' ? 'bg-amber-400' : 'bg-emerald-400'}`}></div>
-                                    <div>
-                                        <p className="text-sm md:text-base font-black tracking-tight text-white mb-2 group-hover:text-amber-200 transition-colors uppercase italic">{t.title}</p>
-                                        <div className="flex flex-wrap items-center gap-4 text-[9px] text-white/60 font-black uppercase tracking-widest">
-                                            <span className="flex items-center gap-1.5">PRIORITY: <span className={t.priority === 'High' ? 'text-rose-400' : 'text-white'}>{t.priority || 'NORMAL'}</span></span>
-                                            <span className="opacity-30">|</span>
-                                            <span className="flex items-center gap-1.5">PROTOCOL: <span className={t.status === 'Completed' ? 'text-emerald-300' : 'text-white'}>{t.status}</span></span>
-                                        </div>
+                <div className="lg:col-span-2 bg-[#9B8EC7] p-8 md:p-12 rounded-[2rem] md:rounded-[4.5rem] shadow-2xl relative overflow-hidden flex flex-col justify-between group">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32 blur-3xl transition-all group-hover:scale-150 duration-700" />
+                    <div className="relative z-10">
+                        <div className="flex items-center justify-between mb-12">
+                            <h3 className="text-[10px] font-black text-white/60 uppercase tracking-[0.4em] italic">Mission Objectives</h3>
+                            <div className="p-3 bg-white/10 rounded-2xl text-white"><ClipboardList size={20} /></div>
+                        </div>
+                        
+                        <div className="space-y-6 max-h-[350px] overflow-y-auto pr-4 custom-scrollbar">
+                            {tasks.length > 0 ? tasks.map((task) => (
+                                <div key={task._id} className="bg-white/10 backdrop-blur-md p-6 rounded-[2rem] border border-white/10 hover:bg-white/20 transition-all cursor-pointer">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <span className={`px-4 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest ${
+                                            task.priority === 'High' ? 'bg-rose-500 text-white' : 'bg-white/20 text-white'
+                                        }`}>{task.priority} Priority</span>
+                                        <ArrowRight size={14} className="text-white/40" />
                                     </div>
+                                    <h4 className="text-lg font-black text-white tracking-tight leading-tight mb-2">{task.title}</h4>
+                                    <p className="text-xs text-white/60 font-medium line-clamp-2">{task.description}</p>
                                 </div>
-                                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-[#9B8EC7] transition-all shadow-lg border border-white/10">
-                                    <ArrowRight size={20} className="text-white" />
+                            )) : (
+                                <div className="flex flex-col items-center justify-center py-20 text-white/30 border-2 border-dashed border-white/10 rounded-[3rem]">
+                                    <AlertCircle size={48} className="mb-4 opacity-20" />
+                                    <p className="text-[10px] font-black uppercase tracking-[0.3em] italic">No Mission Objectives Detected</p>
                                 </div>
-                            </div>
-                        ))}
-                        {tasks.length === 0 && (
-                            <div className="text-center py-20 flex flex-col items-center gap-6 opacity-20">
-                                <AlertCircle size={48} />
-                                <p className="text-[10px] font-black uppercase tracking-[0.5em] italic">No Mission Objectives Detected</p>
-                            </div>
-                        )}
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="mt-12 flex items-center justify-between relative z-10">
+                        <div>
+                            <p className="text-4xl font-black text-white tracking-tighter italic">{(tasks.filter(t => t.status === 'Completed').length / (tasks.length || 1) * 100).toFixed(0)}%</p>
+                            <p className="text-[9px] font-black text-white/50 uppercase tracking-widest mt-1 italic">Objective Completion Rate</p>
+                        </div>
+                        <button className="px-8 py-4 bg-white text-[#9B8EC7] rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl italic">
+                            Full Briefing
+                        </button>
                     </div>
                 </div>
             </div>
