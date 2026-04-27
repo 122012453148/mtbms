@@ -4,7 +4,7 @@ import {
     CalendarCheck, UserCheck, Timer, 
     CheckCircle2, ClipboardList, LogIn, 
     LogOut as LogOutIcon, ArrowRight,
-    Loader2, AlertCircle, Calendar, Bell
+    Loader2, AlertCircle, Calendar, Bell, Clock
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
@@ -111,23 +111,25 @@ const EmployeeDashboard = () => {
     }, [isCheckedIn]);
 
     const handleCheckIn = async () => {
+        setIsCheckedIn(true); // Immediate visual feedback
         try {
             await api.post('/attendance/checkin');
             toast.success('Punched IN: Success');
-            setIsCheckedIn(true);
             fetchData();
         } catch (error) {
+            setIsCheckedIn(false); // Revert on failure
             toast.error(error.response?.data?.message || 'Check-in failed');
         }
     };
 
     const handleCheckOut = async () => {
+        setIsCheckedIn(false); // Immediate visual feedback
         try {
             await api.post('/attendance/checkout');
             toast.success('Punched OUT: Recorded');
-            setIsCheckedIn(false);
             fetchData();
         } catch (error) {
+            setIsCheckedIn(true); // Revert on failure
             toast.error(error.response?.data?.message || 'Check-out failed');
         }
     };
@@ -142,35 +144,39 @@ const EmployeeDashboard = () => {
     return (
         <div className="space-y-8 md:space-y-10 animate-in fade-in duration-500 font-inter pb-20">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div>
-                    <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter uppercase italic leading-none">MTBMS Employee Dashboard</h1>
-                    <p className="text-[10px] md:text-sm text-slate-500 mt-2 flex items-center gap-2 font-black uppercase tracking-widest italic opacity-60">
-                        <Calendar size={14} className="text-[#9B8EC7]" /> {todayDateFormatted}
-                    </p>
-                </div>
-                
-                <div className="flex items-center gap-3 bg-white p-2 md:p-3 rounded-2xl md:rounded-3xl border border-slate-50 shadow-2xl">
-                    {!punchState.checkInRaw && !isCheckedIn && (
-                        <button 
-                            onClick={handleCheckIn}
-                            className="w-full flex items-center justify-center gap-3 py-4 bg-[#9B8EC7] text-white rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] italic hover:bg-[#7E74C9] transition-all shadow-xl hover:scale-105 active:scale-95"
-                        >
-                            <LogIn size={18} /> CHECK IN
-                        </button>
-                    )}
-                    {isCheckedIn && (
-                        <button 
-                            onClick={handleCheckOut}
-                            className="w-full flex items-center justify-center gap-3 py-4 bg-[#9B8EC7] text-white rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] italic hover:bg-[#7E74C9] transition-all shadow-xl hover:scale-105 active:scale-95"
-                        >
-                            <LogOutIcon size={18} /> CHECK OUT
-                        </button>
-                    )}
-                    {isFullyDone && (
-                        <div className="px-8 py-4 rounded-xl md:rounded-2xl bg-emerald-50 text-emerald-700 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] italic flex items-center gap-3">
-                            <CheckCircle2 size={18} /> SHIFT COMPLETE
-                        </div>
-                    )}
+                <div className="flex flex-col md:flex-row md:items-center justify-between w-full">
+                    <div>
+                        <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter uppercase italic leading-none">MTBMS Employee Dashboard</h1>
+                        <p className="text-[10px] md:text-sm text-slate-500 mt-2 flex items-center gap-2 font-black uppercase tracking-widest italic opacity-60">
+                            <Calendar size={14} className="text-[#9B8EC7]" /> {todayDateFormatted}
+                        </p>
+                    </div>
+                    
+                    <div className="mt-4 md:mt-0 flex items-center">
+                        {!punchState.checkInRaw && !isCheckedIn ? (
+                            <button 
+                                onClick={handleCheckIn}
+                                className="w-44 px-6 py-3 bg-[#22C55E] text-white text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full shadow-lg hover:bg-green-600 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
+                            >
+                                <LogIn size={18} /> <span>CHECK IN</span>
+                            </button>
+                        ) : (
+                            <div className="flex items-center gap-3">
+                                {isCheckedIn ? (
+                                    <button 
+                                        onClick={handleCheckOut}
+                                        className="w-44 px-6 py-3 bg-[#EF4444] text-white text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full shadow-lg hover:bg-red-600 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
+                                    >
+                                        <LogOutIcon size={18} /> <span>CHECK OUT</span>
+                                    </button>
+                                ) : (
+                                    <div className="w-44 px-6 py-3 bg-emerald-50 text-emerald-700 text-[10px] md:text-xs font-black uppercase tracking-[0.15em] italic rounded-full border border-emerald-100 flex items-center justify-center gap-3">
+                                        <CheckCircle2 size={18} /> <span>SHIFT COMPLETE</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -194,7 +200,9 @@ const EmployeeDashboard = () => {
                                 <div className="flex items-center gap-5">
                                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${punchState.checkInRaw ? 'bg-[#D1FAE5] text-[#065F46]' : 'bg-slate-50 text-slate-300'}`}>IN</div>
                                     <div>
-                                        <p className="text-xs font-black text-slate-800 uppercase tracking-tight italic">Check-in Registered</p>
+                                        <p className={`text-xs font-black uppercase tracking-tight italic ${isCheckedIn ? 'text-emerald-600' : 'text-slate-800'}`}>
+                                            {isCheckedIn ? 'Checked In' : 'Check-in Registered'}
+                                        </p>
                                         <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{checkInTimeFormatted || 'Pending Entry'}</p>
                                     </div>
                                 </div>
@@ -203,13 +211,13 @@ const EmployeeDashboard = () => {
 
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-5">
-                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${punchState.checkOutRaw ? 'bg-[#FEE2E2] text-[#991B1B]' : 'bg-slate-50 text-slate-300'}`}>OUT</div>
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs shadow-inner ${punchState.checkOutRaw ? 'bg-[#FEE2E2] text-[#991B1B]' : (isCheckedIn ? 'bg-rose-50 text-rose-600 border border-rose-100' : 'bg-slate-50 text-slate-300')}`}>OUT</div>
                                     <div>
-                                        <p className="text-xs font-black text-slate-800 uppercase tracking-tight italic">Check-out Logged</p>
-                                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{checkOutTimeFormatted || 'Shift active'}</p>
+                                        <p className={`text-xs font-black uppercase tracking-tight italic ${isCheckedIn ? 'text-rose-600' : 'text-slate-800'}`}>Check-out Logged</p>
+                                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{checkOutTimeFormatted || (isCheckedIn ? 'Session Active' : 'Shift inactive')}</p>
                                     </div>
                                 </div>
-                                {punchState.checkOutRaw && <CheckCircle2 size={18} className="text-[#9B8EC7]" />}
+                                {punchState.checkOutRaw ? <CheckCircle2 size={18} className="text-[#9B8EC7]" /> : isCheckedIn && <Clock size={18} className="text-rose-500 animate-pulse" />}
                             </div>
                         </div>
                     </div>
@@ -218,7 +226,7 @@ const EmployeeDashboard = () => {
                         {isCheckedIn && (
                             <div className="text-center">
                                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] mb-2 italic">Active Mission Timer</p>
-                                <p className="text-4xl md:text-5xl font-black text-[#9B8EC7] tracking-tighter italic">{formatTime(timer)}</p>
+                                <p className="text-4xl md:text-5xl font-black text-[#EF4444] tracking-tighter italic">{formatTime(timer)}</p>
                             </div>
                         )}
                         {isFullyDone && (
